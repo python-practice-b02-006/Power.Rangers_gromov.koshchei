@@ -6,7 +6,7 @@ G = 6,67430*10**(-11)
 class Object():
     """Space object class
     """
-    def __init__(self, coords, vel, mass, rad, color=(255, 255, 255), name=""):
+    def __init__(self, coords, vel, mass, rad, color=(255, 255, 255)):
         self.mass = mass
         """Object mass
         """
