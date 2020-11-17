@@ -49,8 +49,8 @@ class Object():
         
         **body** — Object to move.
         """
-        self.coords[0] = vel[0]*dt + (self.force[0]/self.mass * dt**2)/2
-        self.coords[1] = vel[1]*dt + (self.force[1]/self.mass * dt**2)/2
+        self.coords[0] = self.vel[0]*dt + (self.force[0]/self.mass * dt**2)/2
+        self.coords[1] = self.vel[1]*dt + (self.force[1]/self.mass * dt**2)/2
         
         self.vel[0] = self.force[0]/self.mass * dt
         self.vel[1] = self.force[1]/self.mass * dt      
