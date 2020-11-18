@@ -41,17 +41,18 @@ class Button():
 
 class Slider():
 
-    def __init__(self, coord, screen, size):
+    def __init__(self, coord, coord2, screen, size):
         self.posit = coord
         self.size = size
         self.screen = screen
-        self.bar_posit = coord
-        self.click_pos = [0, 0]
+        self.bar_posit = coord2
         self.clicked = False
         self.activated = False
+        self.level = self.bar_posit[0]/(self.size[0] - self.size[1])
 
     def create(self):
         pg.draw.rect(self.screen, GRAY, (self.posit, self.size), 0)
+        pg.draw.rect(self.screen, DARK_GRAY, (self.bar_posit, (self.size[1], self.size[1])), 0)
 
     def click(self, events):
         for event in events:
@@ -59,14 +60,17 @@ class Slider():
                     and self.bar_posit[0] <= pg.mouse.get_pos()[0] <= self.bar_posit[0] + self.size[1] \
                     and self.bar_posit[1] <= pg.mouse.get_pos()[1] <= self.bar_posit[1] + self.size[1]:
                 self.clicked = True
-                #self.click_pos = pg.mouse.get_pos()
             elif event.type == pg.MOUSEBUTTONUP:
                 self.clicked = False
 
     def move(self):
-        pg.draw.rect(self.screen, DARK_GRAY, (self.bar_posit, (self.size[1], self.size[1])), 0)
+        pos = pg.mouse.get_pos()
+        if not self.activated:
+            self.clicked = False
         if self.clicked:
-            self.bar_posit[0] = pg.mouse.get_pos()[0]
+            if self.posit[0] <= pos[0] <= self.posit[0] + self.size[0] - self.size[1]:
+                self.bar_posit[0] = pos[0]
+        self.level = (self.bar_posit[0] - self.posit[0]) / (self.size[0] - self.size[1])
 
     def active(self):
         if self.bar_posit[0] <= pg.mouse.get_pos()[0] <= self.bar_posit[0] + self.size[1] \
@@ -76,30 +80,5 @@ class Slider():
             self.activated = False
 
 
-def quit_f():
-    return True
-
-
-clock = pg.time.Clock()
-finished = False
-SCREEN = pg.display.set_mode((800, 600))
-quit_button = Button("quit", (100, 100), SCREEN, (100, 50))
-slider = Slider([10, 500], SCREEN, [100, 20])
-
-while not finished:
-    clock.tick(60)
-    SCREEN.fill((0, 0, 0))
-    quit_button.create()
-    slider.create()
-    slider.active()
-    quit_button.active()
-    if slider.activated:
-        slider.click(pg.event.get())
-    slider.move()
-    if quit_button.activated:
-        finished = quit_button.click(pg.event.get(), quit_f)
-    if pg.event.get() == pg.QUIT:
-        finished = True
-    pg.display.flip()
-
-pg.quit()
+if __name__ == "__main__":
+    print("This module is not for direct call!")
