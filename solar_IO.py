@@ -1,43 +1,50 @@
 # coding: utf-8
 
-from solar_objects import Object
-input_filename = 'file'
+from solar_physics import Object 
+input_filename = 'input_file'
 output_filename = 'statistics'
 
-def read_space_objects_data_from_file(input_filename):
+def read_space_objects_data_from_file(input_file_lines):
     """Cчитывает данные о космических объектах из файла, создаёт сами объекты
     Параметры:
 
-    **input_filename** — имя входного файла
+    **input_file_lines** — Строки входного файла
     """
+    
+    objects = []
+    for line in input_file_lines:
+        if len(line.strip()) == 0 or line[0] == '#':
+            continue  # пустые строки и строки-комментарии пропускаем
+        object = Object()
+        parse_object_parameters(line, object)
+        objects.append(object)
 
-    #return objects                                                                                                                     
-    pass
+
+    return objects
 
 def parse_object_parameters(line, obj):
     """Считывает данные о планете из строки.
     Предполагается такая строка:
     Входная строка должна иметь слеюущий формат:
-    [X_coord,Y_coord] [Velocity_X,Velocity_Y] Mass Radius Color
+    X_coord Y_coord Velocity_X Velocity_Y Mass Radius Color
 
     Параметры:
 
     **line** — строка с описание объекта.
     **obj** — объект.
     """
-    obj.coords = line.split()[1]
-    obj.vel = line.split()[2]
-    obj.mass = float(line.split()[3])
-    obj.rad = float(line.split()[4])
-    obj.color = line.split()[6]
     
-    pass
+    obj.coords[0] = float(line.split()[1])
+    obj.coords[1] = float(line.split()[2])
+    obj.vel[0] = float(line.split()[3])
+    obj.vel[1] = float(line.split()[4])
+    obj.mass = float(line.split()[5])
+    obj.rad = float(line.split()[6])
+    obj.color = line.split()[7]
 
 
 def write_space_objects_data_to_file(output_filename, space_objects):
     """Сохраняет данные о космических объектах в файл.
-    Строки должны иметь следующий формат:
-    <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
 
     Параметры:
 
@@ -46,5 +53,11 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     pass
 
-if __name__ == "__main__":
-    print("This module is not for direct call!")
+
+f = open("file.txt",'r')
+file = f.readlines()
+result = file[0].split()[1]
+objects = read_space_objects_data_from_file(file)
+
+for obj in objects:
+    print(obj.mass)

@@ -1,34 +1,30 @@
 # coding: utf-8
 import numpy as np
-
 G = 6,67430*10**(-11)
 
-class Object():
+class Object:
     """Space object class
+       (string format:x y vx vy mass rad color)
     """
-    def __init__(self, coords, vel, mass, rad, color=(255, 255, 255)):
-        self.mass = mass
+    def __init__(self):
+        self.mass = 0
         """Object mass
         """
   
-        self.coords = coords
-        """Coordinates
-        """
+        self.coords = [0, 0]
+        """Coordinates [X, Y]
+        """        
   
-        self.vel = vel
-        """Velocity
+        self.vel = [0, 0]
+        """Velocity [Vx, Vy]
         """
   
         self.force = np.array([0., 0.])
-        """Force
+        """Force [Fx, Fy]
         """
   
-        self.rad = rad
+        self.rad = 0
         """Object radius
-        """
-  
-        self.color = color
-        """Object color
         """
 
     def calculate_force(self, space_objects):
