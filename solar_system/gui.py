@@ -9,18 +9,19 @@ DARK_GRAY = (108, 108, 108)
 
 class Button():
 
-    def __init__(self, name, pos, screen, size):
+    def __init__(self, name, pos, screen, size, text_pos):
         self.name = name
         self.pos = pos
         self.screen = screen
         self.color = GRAY
         self.size = size
+        self.text_pos = text_pos
         self.font = pg.font.SysFont("dejavusansmono", 25)
         self.activated = False
 
     def create(self):
         pg.draw.rect(self.screen, self.color, (self.pos, self.size), 0)
-        self.screen.blit((self.font.render(self.name, True, (0, 0, 0))), self.pos)
+        self.screen.blit((self.font.render(self.name, True, (0, 0, 0))), self.text_pos)
 
     def click(self, events, command):
         for event in events:

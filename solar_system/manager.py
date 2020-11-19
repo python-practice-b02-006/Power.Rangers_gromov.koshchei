@@ -1,14 +1,5 @@
+from solar_system import gui, phys, IO
 import pygame as pg
-import gui
-import IO
-import obj
-import phys
-
-SCREEN_SIZE = (800, 600)
-FPS = 60
-dT = 0.01
-
-pg.init()
 
 
 class Manager():
@@ -17,8 +8,8 @@ class Manager():
         self.objects = []
         self.input_file = 'input.txt'
         self.output_file = 'output.txt'
-        self.button = gui.Button("start", (0, 550), screen, (100, 50))
-        self.slider = gui.Slider((300, 500), [300, 500], screen, (200, 20))
+        self.button = gui.Button("start", (0, 550), screen, (100, 50), (25, 565))
+        self.slider = gui.Slider((300, 560), [300, 560], screen, (400, 20))
         self.screen = screen
         self.play = False
         self.dt = dt
@@ -73,17 +64,5 @@ class Manager():
         self.play = False
 
 
-SCREEN = pg.display.set_mode(SCREEN_SIZE)
-pg.display.set_caption("Solar system")
-clock = pg.time.Clock()
-DONE = False
-mgr = Manager(SCREEN, dT)
-mgr.get_objects()
-
-while not DONE:
-    clock.tick(FPS)
-    SCREEN.fill((0,0,0))
-    DONE = mgr.process(pg.event.get())
-    pg.display.flip()
-
-pg.quit()
+if __name__ == "__main__":
+    print("This module is not for direct call!")

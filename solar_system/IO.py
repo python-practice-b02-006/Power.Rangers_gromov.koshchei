@@ -1,4 +1,5 @@
-from obj import Object
+from solar_system.obj import Object
+from solar_system import colors as cl
 
 
 def read_obj(file_name):
@@ -12,6 +13,7 @@ def read_obj(file_name):
 
 
 def parse_obj_par(line):
+    color = cl.Colors()
     obj = Object()
     obj.coords[0] = float(line.split()[0])
     obj.coords[1] = float(line.split()[1])
@@ -19,6 +21,7 @@ def parse_obj_par(line):
     obj.vel[1] = float(line.split()[3])
     obj.mass = float(line.split()[4])
     obj.rad = float(line.split()[5])
+    obj.color = color.COLORS[int(line.split()[6])]
     return obj
 
 
@@ -29,6 +32,7 @@ def write_obj(file_name, space_objects):
                                 + str(obj.vel[0]) + ' ' + str(obj.vel[1]) + ' '
                                 + str(obj.mass) + ' ' + str(obj.rad) + '\n')'''
     pass
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
