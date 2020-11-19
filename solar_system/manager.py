@@ -32,10 +32,11 @@ class Manager():
 
         for body in self.objects:
             body.draw(self.screen)
-        if self.play:
-            self.objects = phys.calculate_force(self.objects)
-            for body in self.objects:
-                body.move(self.dt)
+        for i in range(10):
+            if self.play:
+                self.objects = phys.calculate_force(self.objects)
+                for body in self.objects:
+                    body.move(self.dt)
 
         done = self.event_handler(events)
 
