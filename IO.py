@@ -2,6 +2,12 @@ from obj import Object
 
 
 def read_obj(file_name):
+    """Take characteristics for spacce objects from file and make objects.
+    Parametrs:
+
+    **file_name** — Input file name.
+    """
+    
     input_file_lines = open(file_name, 'r')
     objects = []
     for line in input_file_lines:
@@ -12,6 +18,15 @@ def read_obj(file_name):
 
 
 def parse_obj_par(line):
+    """Take object characteristis from string.
+    Input string format:
+    X_coord Y_coord Velocity_X Velocity_Y Mass Radius Color
+
+    Parametrs:
+
+    **line** — string with object characteristics.
+    """
+
     obj = Object()
     obj.coords[0] = float(line.split()[0])
     obj.coords[1] = float(line.split()[1])
@@ -21,8 +36,15 @@ def parse_obj_par(line):
     obj.rad = float(line.split()[5])
     return obj
 
-
 def write_obj(file_name, space_objects):
+    """
+    Сохраняет данные о космических объектах в файл.
+
+    Параметры:
+
+    **output_filename** — имя входного файла
+    **space_objects** — список объектов планет и звёзд
+    """
     #output_file_lines = open(file_name, 'w')
     '''for obj in space_objects:
         output_file_lines.write(str(obj.coords[0]) + ' ' + str(obj.coords[1]) + ' '
