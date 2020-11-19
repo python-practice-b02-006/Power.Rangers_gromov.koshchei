@@ -18,6 +18,8 @@ class Manager():
         self.slider = gui.Slider((100, 500), [100, 500], screen, (20, 100))
 
     def get_objects(self):
+        self.objects = solar_IO.read_obj('palnets_characteristics')
+
 
 
 
