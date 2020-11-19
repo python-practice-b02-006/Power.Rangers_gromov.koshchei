@@ -1,4 +1,4 @@
-from solar_physics import Object
+from obj import Object
 
 def read_obj(file_name):
     """Cчитывает данные о космических объектах из файла, создаёт сами объекты
@@ -6,35 +6,28 @@ def read_obj(file_name):
     **input_file_lines** — Строки входного файла
     """
 
-    input_file_lines = (file_name, 'r')
+    input_file_lines = open(file_name, 'r')
     objects = []
     for line in input_file_lines:
         if len(line.strip()) == 0 or line[0] == '#':
             continue  # пустые строки и строки-комментарии пропускаем
-        object = Object()
-        parse_obj_par(line, object)
-        objects.append(object)
+        objects.append(parse_obj_par(line))
 
     return objects
 
 
-def parse_obj_par(line, obj):
-    """Считывает данные о планете из строки.
-    Предполагается такая строка:
-    Входная строка должна иметь слеюущий формат:
-    X_coord Y_coord Velocity_X Velocity_Y Mass Radius Color
-    Параметры:
-    **line** — строка с описание объекта.
-    **obj** — объект.
-    """
+def parse_obj_par(line):
+    obj = Object()
+    #print(line.split())
+    obj.coords[0] = float(line.split()[0])
+    obj.coords[1] = float(line.split()[1])
+    obj.vel[0] = float(line.split()[2])
+    obj.vel[1] = float(line.split()[3])
+    obj.mass = float(line.split()[4])
+    obj.rad = float(line.split()[5])
+    #obj.color = line.split()[7]
 
-    obj.coords[0] = float(line.split()[1])
-    obj.coords[1] = float(line.split()[2])
-    obj.vel[0] = float(line.split()[3])
-    obj.vel[1] = float(line.split()[4])
-    obj.mass = float(line.split()[5])
-    obj.rad = float(line.split()[6])
-    obj.color = line.split()[7]
+    return obj
 
 
 def write_obj(output_filename, space_objects):

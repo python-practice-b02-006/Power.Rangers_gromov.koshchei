@@ -1,3 +1,4 @@
-import solar_IO
+import IO
 
-A = solar_IO.read_obj("palnets_characteristics")
+A = IO.read_obj("planets_characteristics")
+
