@@ -5,30 +5,39 @@ import obj
 import phys
 
 SCREEN_SIZE = (800, 600)
-dt = 0.1
+FPS = 60
+dT = 0.01
 
 pg.init()
 
 class Manager():
 
-    def __init__(self, screen):
+    def __init__(self, screen, dt):
         self.objects = []
         self.input_file = 'input.txt'
         self.output_file = 'output.txt'
-        self.button = gui.Button("start", (100, 100), screen, (100, 50))
-        self.slider = gui.Slider((100, 500), [100, 500], screen, (20, 100))
+        self.button = gui.Button("start", (0, 550), screen, (100, 50))
+        self.slider = gui.Slider((300, 500), [300, 500], screen, (200, 20))
         self.screen = screen
+        self.play = False
+        self.dt = dt
 
     def get_objects(self):
         self.objects = IO.read_obj('planets_characteristics')
 
-    def process(self, events, dt):
+    def process(self, events):
+        self.button.create()
+        self.button.active()
+        self.slider.create()
+        self.slider.active()
         done = self.event_handler(events)
         for body in self.objects:
             body.draw(self.screen)
-        self.objects = phys.calculate_force(self.objects)
-        for body in self.objects:
-            body.move(dt)
+        if self.play:
+            self.objects = phys.calculate_force(self.objects)
+            for body in self.objects:
+                body.move(self.dt * self.slider.level)
+        self.slider.move()
         return done
 
     def event_handler(self, events):
@@ -36,20 +45,34 @@ class Manager():
         for event in events:
             if event.type == pg.QUIT:
                 done = True
+        if self.button.activated and not self.play:
+            self.button.click(events, self.start)
+        elif self.button.activated and self.play:
+            self.button.click(events, self.pause)
+        if self.slider.activated:
+            self.slider.click(events)
         return done
+
+    def start(self):
+        self.button.name = "pause"
+        self.play = True
+
+    def pause(self):
+        self.button.name = "start"
+        self.play = False
 
 
 SCREEN = pg.display.set_mode(SCREEN_SIZE)
 pg.display.set_caption("Solar system")
 clock = pg.time.Clock()
 DONE = False
-mgr = Manager(SCREEN)
+mgr = Manager(SCREEN, dT)
 mgr.get_objects()
 
 while not DONE:
-    clock.tick(60)
+    clock.tick(FPS)
     SCREEN.fill((0,0,0))
-    DONE = mgr.process(pg.event.get(), dt)
+    DONE = mgr.process(pg.event.get())
     pg.display.flip()
 
 pg.quit()

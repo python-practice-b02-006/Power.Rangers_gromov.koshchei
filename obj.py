@@ -23,7 +23,6 @@ class Object:
 
     def draw(self, screen):
         pg.draw.circle(screen, self.color, (int(self.coords[0]), int(self.coords[1])), int(self.rad), 0)
-        print(self.coords)
             
     
 if __name__ == "__main__":

@@ -27,9 +27,7 @@ class Button():
             if event.type == pg.MOUSEBUTTONDOWN \
                     and self.pos[0] <= pg.mouse.get_pos()[0] <= self.pos[0] + self.size[0] \
                     and self.pos[1] <= pg.mouse.get_pos()[1] <= self.pos[1] + self.size[1]:
-                return command()
-            else:
-                return False
+                command()
 
     def active(self):
         if self.pos[0] <= pg.mouse.get_pos()[0] <= self.pos[0] + self.size[0] \
@@ -68,8 +66,8 @@ class Slider():
         if not self.activated:
             self.clicked = False
         if self.clicked:
-            if self.posit[0] <= pos[0] <= self.posit[0] + self.size[0] - self.size[1]:
-                self.bar_posit[0] = pos[0]
+            if self.posit[0] + int(self.size[1]/2) <= pos[0] <= self.posit[0] + self.size[0] - int(self.size[1]/2):
+                self.bar_posit[0] = pos[0] - int(self.size[1]/2)
         self.level = (self.bar_posit[0] - self.posit[0]) / (self.size[0] - self.size[1])
 
     def active(self):
