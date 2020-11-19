@@ -1,13 +1,13 @@
 from solar_system import gui, phys, IO
 import pygame as pg
+import easygui
 
 
 class Manager():
 
     def __init__(self, screen, dt):
         self.objects = []
-        self.input_file = 'input.txt'
-        self.output_file = 'output.txt'
+        self.file = 'planets_characteristics'
         self.button = gui.Button("start", (0, 550), screen, (100, 50), (25, 565))
         self.button2 = gui.Button("file", (110, 550), screen, (100, 50), (140, 565))
         self.slider = gui.Slider((300, 560), [300, 560], screen, (400, 20))
@@ -16,7 +16,7 @@ class Manager():
         self.dt = dt
 
     def get_objects(self):
-        self.objects = IO.read_obj('planets_characteristics')
+        self.objects = IO.read_obj(self.file)
 
     def process(self, events):
 
@@ -30,14 +30,14 @@ class Manager():
         self.slider.active()
         self.slider.move()
 
-        done = self.event_handler(events)
-
         for body in self.objects:
             body.draw(self.screen)
         if self.play:
             self.objects = phys.calculate_force(self.objects)
             for body in self.objects:
                 body.move(self.dt)
+
+        done = self.event_handler(events)
 
         return done
 
@@ -52,6 +52,8 @@ class Manager():
             self.button.click(events, self.pause)
         if self.slider.activated:
             self.slider.click(events)
+        if self.button2.activated:
+            self.button2.click(events, self.get_file)
         return done
 
     def start(self):
@@ -61,6 +63,14 @@ class Manager():
     def pause(self):
         self.button.name = "start"
         self.play = False
+
+    def get_file(self):
+        file_name = easygui.fileopenbox()
+        if file_name != None:
+            self.file = file_name
+            self.get_objects()
+            self.button.name = "start"
+            self.play = False
 
 
 if __name__ == "__main__":
