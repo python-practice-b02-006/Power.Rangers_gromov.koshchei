@@ -13,3 +13,7 @@ def calculate_force(space_objects):
                 body.force[1] += (body1.coords[1] - body.coords[1]) * G * body.mass * body1.mass / (r ** 3)
 
     return local
+
+
+if __name__ == "__main__":
+    print("This module is not for direct call!")

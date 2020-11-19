@@ -10,6 +10,7 @@ dT = 0.01
 
 pg.init()
 
+
 class Manager():
 
     def __init__(self, screen, dt):
@@ -25,19 +26,29 @@ class Manager():
     def get_objects(self):
         self.objects = IO.read_obj('planets_characteristics')
 
+    def send_objects(self):
+        self.objects = IO.write_obj('planets_characteristics', self.objects)
+
     def process(self, events):
+
         self.button.create()
         self.button.active()
+
         self.slider.create()
         self.slider.active()
+        self.slider.move()
+
         done = self.event_handler(events)
+
+        #self.get_objects()
         for body in self.objects:
             body.draw(self.screen)
         if self.play:
             self.objects = phys.calculate_force(self.objects)
             for body in self.objects:
                 body.move(self.dt * self.slider.level)
-        self.slider.move()
+        #self.send_objects()
+
         return done
 
     def event_handler(self, events):
