@@ -9,6 +9,7 @@ class Manager():
         self.input_file = 'input.txt'
         self.output_file = 'output.txt'
         self.button = gui.Button("start", (0, 550), screen, (100, 50), (25, 565))
+        self.button2 = gui.Button("file", (110, 550), screen, (100, 50), (140, 565))
         self.slider = gui.Slider((300, 560), [300, 560], screen, (400, 20))
         self.screen = screen
         self.play = False
@@ -17,13 +18,13 @@ class Manager():
     def get_objects(self):
         self.objects = IO.read_obj('planets_characteristics')
 
-    def send_objects(self):
-        self.objects = IO.write_obj('planets_characteristics', self.objects)
-
     def process(self, events):
 
         self.button.create()
         self.button.active()
+
+        self.button2.create()
+        self.button2.active()
 
         self.slider.create()
         self.slider.active()
@@ -31,14 +32,12 @@ class Manager():
 
         done = self.event_handler(events)
 
-        #self.get_objects()
         for body in self.objects:
             body.draw(self.screen)
         if self.play:
             self.objects = phys.calculate_force(self.objects)
             for body in self.objects:
-                body.move(self.dt * self.slider.level)
-        #self.send_objects()
+                body.move(self.dt)
 
         return done
 

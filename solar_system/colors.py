@@ -5,7 +5,10 @@ class Colors():
         YELLOW = (244, 253, 62)
         GREEN = (0, 255, 0)
         BLUE = (0, 0, 255)
-        self.COLORS = (RED, YELLOW, GREEN, BLUE)
+        WHITE = (255, 255, 255)
+        GRAY = (168, 168, 168)
+        DARK_GRAY = (108, 108, 108)
+        self.COLORS = (RED, YELLOW, GREEN, BLUE, WHITE, GRAY, DARK_GRAY)
 
 
 if __name__ == "__main__":

@@ -25,14 +25,5 @@ def parse_obj_par(line):
     return obj
 
 
-def write_obj(file_name, space_objects):
-    #output_file_lines = open(file_name, 'w')
-    '''for obj in space_objects:
-        output_file_lines.write(str(obj.coords[0]) + ' ' + str(obj.coords[1]) + ' '
-                                + str(obj.vel[0]) + ' ' + str(obj.vel[1]) + ' '
-                                + str(obj.mass) + ' ' + str(obj.rad) + '\n')'''
-    pass
-
-
 if __name__ == "__main__":
     print("This module is not for direct call!")
