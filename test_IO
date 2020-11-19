@@ -1,4 +1,0 @@
-import IO
-
-A = IO.read_obj("planets_characteristics")
-
