@@ -65,7 +65,7 @@ def objects_positions(space_objects, dt):
     for body in space_objects:
         body.calculate_force(space_objects)
     for body in space_objects:
-        body.move()
+        body.move(dt)
             
     
 if __name__ == "__main__":
