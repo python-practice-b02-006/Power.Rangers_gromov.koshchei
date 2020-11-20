@@ -1,5 +1,5 @@
-from solar_system.obj import Object
-from solar_system import colors as cl
+from solar_system.modules.obj import Object
+from solar_system.modules import colors as cl
 
 
 def read_obj(file_name):

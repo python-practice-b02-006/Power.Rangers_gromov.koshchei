@@ -1,5 +1,5 @@
 import pygame as pg
-from solar_system import manager
+from solar_system.modules import manager
 
 SCREEN_SIZE = (800, 600)
 FPS = 60

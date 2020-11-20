@@ -1,4 +1,4 @@
-from solar_system import gui, phys, IO
+from solar_system.modules import gui, IO, phys
 import pygame as pg
 import easygui
 
