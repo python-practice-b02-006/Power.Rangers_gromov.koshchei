@@ -3,7 +3,7 @@ from solar_system.modules import manager
 
 SCREEN_SIZE = (800, 600)
 FPS = 60
-dT = 0.0003
+dT = 0.00005
 
 pg.init()
 SCREEN = pg.display.set_mode(SCREEN_SIZE)
