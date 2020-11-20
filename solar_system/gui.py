@@ -46,7 +46,6 @@ class Slider():
         self.screen = screen
         self.bar_posit = coord2
         self.clicked = False
-        self.activated = False
         self.level = self.bar_posit[0]/(self.size[0] - self.size[1])
 
     def create(self):
@@ -64,19 +63,10 @@ class Slider():
 
     def move(self):
         pos = pg.mouse.get_pos()
-        if not self.activated:
-            self.clicked = False
         if self.clicked:
             if self.posit[0] + int(self.size[1]/2) <= pos[0] <= self.posit[0] + self.size[0] - int(self.size[1]/2):
                 self.bar_posit[0] = pos[0] - int(self.size[1]/2)
         self.level = (self.bar_posit[0] - self.posit[0]) / (self.size[0] - self.size[1])
-
-    def active(self):
-        if self.bar_posit[0] <= pg.mouse.get_pos()[0] <= self.bar_posit[0] + self.size[1] \
-                and self.bar_posit[1] <= pg.mouse.get_pos()[1] <= self.bar_posit[1] + self.size[1]:
-            self.activated = True
-        else:
-            self.activated = False
 
 
 if __name__ == "__main__":

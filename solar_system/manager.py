@@ -27,7 +27,6 @@ class Manager():
         self.button2.active()
 
         self.slider.create()
-        self.slider.active()
         self.slider.move()
 
         for body in self.objects:
@@ -51,8 +50,7 @@ class Manager():
             self.button.click(events, self.start)
         elif self.button.activated and self.play:
             self.button.click(events, self.pause)
-        if self.slider.activated:
-            self.slider.click(events)
+        self.slider.click(events)
         if self.button2.activated:
             self.button2.click(events, self.get_file)
         return done
