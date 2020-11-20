@@ -7,7 +7,7 @@ class Manager():
 
     def __init__(self, screen, dt):
         self.objects = []
-        self.file = 'planets_characteristics'
+        self.file = '..\solar_system\modules\planets_characteristics'
         self.button = gui.Button("start", (0, 550), screen, (100, 50), (25, 565))
         self.button2 = gui.Button("file", (110, 550), screen, (100, 50), (140, 565))
         self.slider = gui.Slider((300, 560), [300, 560], screen, (400, 20))
