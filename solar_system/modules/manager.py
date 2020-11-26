@@ -31,7 +31,7 @@ class Manager():
 
         for body in self.objects:
             body.draw(self.screen)
-        for i in range(100):
+        for i in range(200):
             if self.play:
                 self.objects = phys.calculate_force(self.objects)
                 for body in self.objects:
