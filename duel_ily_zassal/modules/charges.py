@@ -9,7 +9,7 @@ class Charge():
         self.size = 10
         self.m_c = m_c
         self.e_c = e_c
-        self.vel = vectors.Vector(0, 50, 0)
+        self.vel = vectors.Vector(0, 0, 0)
         self.accel = vectors.Vector(0, 0, 0)
         self.mass = 10
         self.coord = vectors.Vector(coord[0], coord[1], coord[2])
