@@ -1,4 +1,4 @@
-from modules import gui, charges, fields, menu
+from modules import gui, charges, fields, menu, background
 import pygame as pg
 import easygui
 
@@ -15,11 +15,17 @@ class Manager():
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.fire_button = gui.Button('fire', (500, 500), self.screen, (100, 50), (525, 510))
         self.menu = menu.Menu(self.screen, self.screensize)
+        self.back = background.Background(self.screen, self.screensize)
+
     def process(self, events):
+
         if self.game is not True:
             self.menu.set_menu(self.screen, self.screensize)
+
         if self.game == True:
+            self.back.set_background()
             self.fire_b()
+
         self.field.calculate_force(self.charges)
         for charge in self.charges:
             charge.create()
