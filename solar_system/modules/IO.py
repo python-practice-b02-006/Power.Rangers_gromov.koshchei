@@ -1,8 +1,12 @@
-from solar_system.modules.obj import Object
-from solar_system.modules import colors as cl
+from obj import Object
+import colors as cl
 
 
 def read_obj(file_name):
+    """Take characteristics for spacce objects from file and make objects.
+    Parametrs:
+    **file_name** — Input file name.
+    """
     input_file_lines = open(file_name, 'r')
     objects = []
     for line in input_file_lines:
@@ -13,6 +17,13 @@ def read_obj(file_name):
 
 
 def parse_obj_par(line):
+    """Take object characteristis from string.
+    Input string format:
+    X_coord Y_coord Velocity_X Velocity_Y Mass Radius Color
+    Parametrs:
+    **line** — string with object characteristics.
+    """
+
     color = cl.Colors()
     obj = Object()
     obj.coords[0] = float(line.split()[0])
