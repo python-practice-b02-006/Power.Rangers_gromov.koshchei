@@ -1,5 +1,5 @@
 import pygame as pg
-from duel_ily_zassal.modules import manager
+from modules import manager
 
 SCREEN_SIZE = (800, 600)
 FPS = 60

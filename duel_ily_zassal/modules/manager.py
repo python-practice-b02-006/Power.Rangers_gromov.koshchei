@@ -1,4 +1,4 @@
-from duel_ily_zassal.modules import gui, charges, fields
+from modules import gui, charges
 import pygame as pg
 import easygui
 
