@@ -1,7 +1,7 @@
 import pygame as pg
 from modules import manager
 
-SCREEN_SIZE = (800, 600)
+SCREEN_SIZE = (1200, 700)
 FPS = 60
 
 pg.init()
@@ -9,7 +9,7 @@ SCREEN = pg.display.set_mode(SCREEN_SIZE)
 pg.display.set_caption("Solar system")
 clock = pg.time.Clock()
 DONE = False
-mgr = manager.Manager(SCREEN)
+mgr = manager.Manager(SCREEN, SCREEN_SIZE)
 
 while not DONE:
     clock.tick(FPS)

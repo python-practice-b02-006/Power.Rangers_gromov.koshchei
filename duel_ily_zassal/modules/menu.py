@@ -13,8 +13,10 @@ from modules import gui
 
 class Menu():
     def __init__(self, scr, screensize):
-        self.play_button = gui.Button("Play", (350, 185), scr, (100, 50), (380, 200))
-        self.quit_button = gui.Button("Quit", (350, 385), scr, (100, 50), (380, 400))
+        self.play_button = gui.Button("Play", (int((screensize[0] - 100)/2), int((screensize[1] - 50)/3)),
+                                      scr, (100, 50), (int((screensize[0] - 100)/2+30), int((screensize[1] - 50)/3 +17)))
+        self.quit_button = gui.Button("Quit", (int((screensize[0] - 100)/2), int(2*(screensize[1] - 50)/3)),
+                                      scr, (100, 50), (int((screensize[0] - 100)/2+30), int(2*(screensize[1] - 50)/3 +17)))
 
     def set_menu(self, scr, screensize):
         SC_IMG = pg.image.load(os.path.join("Images", "menu.jpg"))

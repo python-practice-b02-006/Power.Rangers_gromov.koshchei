@@ -2,21 +2,22 @@ from modules import gui, charges, fields, menu
 import pygame as pg
 import easygui
 
-SCREEN_SIZE = (800, 600)
+
 class Manager():
 
-    def __init__(self, screen):
+    def __init__(self, screen, screensize):
         self.screen = screen
+        self.screensize = screensize
         self.done = False
         self.game = False
         self.charges = []
         self.field = fields.Field((10, 10, 10), (10, 10, 10))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.fire_button = gui.Button('fire', (500, 500), self.screen, (100, 50), (525, 510))
-        self.menu = menu.Menu(self.screen, SCREEN_SIZE)
+        self.menu = menu.Menu(self.screen, self.screensize)
     def process(self, events):
         if self.game is not True:
-            self.menu.set_menu(self.screen, SCREEN_SIZE)
+            self.menu.set_menu(self.screen, self.screensize)
         if self.game == True:
             self.fire_b()
         self.field.calculate_force(self.charges)
