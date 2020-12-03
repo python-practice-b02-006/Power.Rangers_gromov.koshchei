@@ -1,4 +1,4 @@
-from duel_ily_zassal.modules import vectors
+from modules import vectors
 
 class Field():
 

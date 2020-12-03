@@ -1,4 +1,4 @@
-from modules import gui, charges
+from modules import gui, charges, fields
 import pygame as pg
 import easygui
 
