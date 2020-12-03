@@ -47,3 +47,7 @@ class Manager():
 
     def add_charge(self):
         self.charges.append(charges.Charge(1, 1, self.screen, (200, 10, 200), (255, 255, 255)))
+
+if __name__ == "__main__":
+    print("This module is not for direct call!")
+

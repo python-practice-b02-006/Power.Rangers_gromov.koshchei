@@ -26,3 +26,5 @@ class Charge():
         self.vel += self.force * (1 / self.mass) * dt
         self.size = 1000 / self.coord.y
 
+if __name__ == "__main__":
+    print("This module is not for direct call!")
