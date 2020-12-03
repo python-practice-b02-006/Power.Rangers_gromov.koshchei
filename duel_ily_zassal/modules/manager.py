@@ -1,4 +1,4 @@
-from duel_ily_zassal.modules import gui, charges
+from duel_ily_zassal.modules import gui, charges, fields
 import pygame as pg
 import easygui
 
@@ -9,8 +9,9 @@ class Manager():
         self.screen = screen
         self.done = False
         self.charges = []
+        self.field = fields.Field((10, 10, 10), (10, 10, 10))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
-        self.fire_button = gui.Button('fire', (500, 500), self.screen, (100, 50), (375, 285))
+        self.fire_button = gui.Button('fire', (500, 500), self.screen, (100, 50), (525, 510))
 
     def process(self, events):
 
@@ -20,6 +21,7 @@ class Manager():
         self.fire_button.create()
         self.fire_button.active()
 
+        self.field.calculate_force(self.charges)
         for charge in self.charges:
             charge.create()
             charge.move(0.01)

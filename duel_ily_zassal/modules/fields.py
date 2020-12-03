@@ -1,26 +1,12 @@
-import vectors.py
+from duel_ily_zassal.modules import vectors
 
 class Field():
-    def __init__(self, Bx, By, Bz, Ex, Ey ,Ez):
-    """Field class                             
-    """
-    
-    self.B = Vector(Bx, By, Bz)
-    """Magnetic field induction
-    """
-    
-    self.E = Vector(Ex, Ey, Ez)
-    """Electric field strength
-    """        
-    
- 	
+
+    def __init__(self, B, E):
+         self.B = vectors.Vector(B[0], B[1], B[2])
+         self.E = vectors.Vector(E[0], E[1], E[2])
+
     def calculate_force(self, bullets):
-    '''Calculate force that move all objects in list of bullets.  
-                                  
-    Parameters:
-            
-    **buletts** - list of bullets.
-    '''
         local = bullets
         for body in local:
             body.force = 0 * body.force
@@ -32,8 +18,4 @@ class Field():
             body.force = body.force + body.e_c * self.E
             
         return local
-        
-        
-            
-                     
-        
+
