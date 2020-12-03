@@ -16,12 +16,13 @@ class Charge():
         self.damage = 1
         self.color = color
         self.screen = screen
+        self.force = vectors.Vector(0, 0, 0)
 
     def create(self):
         pg.draw.circle(self.screen, self.color, (int(self.coord.x), int(self.coord.z)), int(self.size))
 
     def move(self, dt):
         self.coord += self.vel * dt
-        self.vel += self.accel * dt
+        self.vel += self.force * (1 / self.mass) * dt
         self.size = 1000 / self.coord.y
 
