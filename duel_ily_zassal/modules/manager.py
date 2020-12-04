@@ -2,6 +2,7 @@ from modules import gui, charges, fields, menu, background
 import pygame as pg
 import easygui
 
+check = 0
 
 class Manager():
 
@@ -24,7 +25,6 @@ class Manager():
 
         if self.game == True:
             self.back.set_background()
-            self.fire_b()
 
         self.field.calculate_force(self.charges)
         for charge in self.charges:
@@ -43,22 +43,24 @@ class Manager():
             if self.menu.quit_button.activated:
                 self.menu.quit_button.click(events, self.quit_b)
                 done = self.done
+            if self.game:
+                if event.type == pg.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        pos = pg.mouse.get_pos()
+                        self.add_charge(pos)     
+                
             if self.menu.play_button.activated:
-                self.menu.play_button.click(events, self.fire_b)
-            if self.fire_button.activated:
-                self.fire_button.click(events, self.add_charge)
+                self.menu.play_button.click(events, self.play)   
         return done
 
     def quit_b(self):
         self.done = True
 
-    def fire_b(self):
-        self.fire_button.create()
-        self.fire_button.active()
+    def play(self):
         self.game = True
 
-    def add_charge(self):
-        self.charges.append(charges.Charge(0, 1, self.screen, (200, 10, 200), (255, 255, 255)))
+    def add_charge(self, pos):
+        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]), (255, 255, 255)))
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
