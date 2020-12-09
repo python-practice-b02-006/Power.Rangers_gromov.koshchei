@@ -74,7 +74,12 @@ class Manager():
                 self.pause_window.continue_button.click(events, self.resume)
                 
             if self.menu.play_button.activated:
-                self.menu.play_button.click(events, self.play)   
+                self.menu.play_button.click(events, self.play)
+                
+            if self.game == True:
+                pos = pg.mouse.get_pos()    
+                self.menu.mouse_gun(pos, self.screen)  
+                   
         return done
 
     def quit_b(self):
