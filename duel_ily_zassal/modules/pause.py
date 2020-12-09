@@ -17,3 +17,4 @@ class Pause():
         self.continue_button.active()
         self.quit_button.create()
         self.quit_button.active()
+        
