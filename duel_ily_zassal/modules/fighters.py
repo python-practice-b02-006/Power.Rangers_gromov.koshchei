@@ -3,7 +3,10 @@ class Pushkin():
 
 
 class Dantes():
-    pass
+
+    def __init__(self):
+        self.hp = 100
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

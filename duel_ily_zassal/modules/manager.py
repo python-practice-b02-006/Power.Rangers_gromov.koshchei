@@ -1,8 +1,7 @@
-from modules import gui, charges, fields, menu, background, pause
+from modules import gui, charges, fields, menu, background, pause, fighters
 import pygame as pg
 import easygui
 
-check = 0
 
 class Manager():
 
@@ -18,6 +17,9 @@ class Manager():
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
+        self.dantes = fighters.Dantes()
+        self.hp = gui.Progress_bar((int(screensize[0]/4), 20), (int(screensize[0]/2), 20),
+                                   self.dantes.hp, screen)
 
     def process(self, events):
         if self.pause == True:
@@ -28,6 +30,7 @@ class Manager():
 
         if self.game == True and self.pause == False:
             self.back.set_background()
+            self.hp.draw()
 
         self.field.calculate_force(self.charges)
         if self.pause == False:
@@ -50,22 +53,29 @@ class Manager():
     def event_handler(self, events):
         done = False
         for event in events:
+
             if event.type == pg.QUIT:
                 done = True
+
             if self.menu.quit_button.activated:
                 self.menu.quit_button.click(events, self.quit_b)
                 done = self.done
+
             if self.pause_window.quit_button.activated:
                 self.pause_window.quit_button.click(events, self.quit_b)
                 done = self.done
+
             if self.pause == False and self.game == True:
+
                 if event.type == pg.KEYDOWN:
                      if event.key == pg.K_ESCAPE:
                         self.pause_g()
                 if event.type == pg.MOUSEBUTTONDOWN:
+
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
+                        self.hp.level -= 10
 
 
             if self.pause_window.continue_button.activated:
@@ -93,6 +103,7 @@ class Manager():
 
     def add_charge(self, pos):
         self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]), (255, 255, 255), self.screensize))
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
