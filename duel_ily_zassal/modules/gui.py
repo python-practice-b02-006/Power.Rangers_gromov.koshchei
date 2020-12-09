@@ -39,7 +39,20 @@ class Button():
 
 
 class Progress_bar():
-    pass
+
+     def __init__(self, coord, size, level, screen):
+         self.coord = coord
+         self.size = size
+         self.level = level
+         self.lev_max = level
+         self.screen = screen
+
+     def draw(self):
+         pg.draw.rect(self.screen, (255,255,255), (self.coord, self.size), 0)
+         if self.level <=0:
+             self.level = 0
+         pg.draw.rect(self.screen, (0, 0, 0 ),
+                      (self.coord, (int(self.size[0]*self.level/self.lev_max), self.size[1])), 0)
 
 
 class Dialog():
@@ -48,6 +61,7 @@ class Dialog():
 
 class Text_box():
     pass
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
