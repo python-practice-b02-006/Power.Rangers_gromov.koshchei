@@ -26,3 +26,7 @@ class Menu():
         self.play_button.active()
         self.quit_button.create()
         self.quit_button.active()
+
+    def mouse_gun(self, pos, scr):
+        gun_surf = pg.image.load(os.path.join("Images", "gun.png"))
+        scr.blit(gun_surf, (pos[0] - 35, pos[1]))
