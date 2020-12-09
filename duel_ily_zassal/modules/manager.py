@@ -59,9 +59,10 @@ class Manager():
                 self.pause_window.quit_button.click(events, self.quit_b)
                 done = self.done
             if self.pause == False and self.game == True:
-                if self.back.pause_button.activated:
-                    self.back.pause_button.click(events, self.pause_g)
-                if event.type == pg.MOUSEBUTTONDOWN and self.back.pause_button.activated == False:
+                if event.type == pg.KEYDOWN:
+                     if event.key == pg.K_ESCAPE:
+                        self.pause_g()
+                if event.type == pg.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
