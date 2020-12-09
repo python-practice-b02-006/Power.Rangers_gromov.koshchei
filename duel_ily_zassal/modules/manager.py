@@ -35,6 +35,14 @@ class Manager():
                 charge.create()
                 charge.move(0.01)
 
+        for charge in self.charges:
+            if charge.coord.z > charge.ground:
+                self.charges.remove(charge)
+
+        for charge in self.charges:
+            if charge.size < 2 and self.pause == False:
+                self.charges.remove(charge)
+
         done = self.event_handler(events)
 
         return done
@@ -57,6 +65,8 @@ class Manager():
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
+
+
             if self.pause_window.continue_button.activated:
                 for charge in self.charges:
                     charge.became()
@@ -81,7 +91,7 @@ class Manager():
         self.pause = False
 
     def add_charge(self, pos):
-        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]), (255, 255, 255)))
+        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]), (255, 255, 255), self.screensize))
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

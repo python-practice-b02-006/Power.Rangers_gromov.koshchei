@@ -5,7 +5,7 @@ pg.init()
 
 class Charge():
 
-    def __init__(self, m_c, e_c, screen, coord, color):
+    def __init__(self, m_c, e_c, screen, coord, color, screensize):
         self.size = 10
         self.size_save = 10
         self.m_c = m_c
@@ -18,6 +18,8 @@ class Charge():
         self.color = color
         self.screen = screen
         self.force = vectors.Vector(0, 0, 0)
+        self.screensize = screensize
+        self.ground = screensize[1]
 
     def create(self):
         pg.draw.circle(self.screen, self.color, (int(self.coord.x), int(self.coord.z)), int(self.size))
@@ -27,6 +29,8 @@ class Charge():
         self.vel += self.force * (1 / self.mass) * dt
         self.size = 1000 / self.coord.y
         self.size_save = self.size
+        self.ground = int(self.screensize[1] / 1.85 + self.size * self.screensize[1] / 50)
+
     def hide(self):
         self.size = 0
 
