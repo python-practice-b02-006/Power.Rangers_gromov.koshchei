@@ -36,3 +36,6 @@ class Vector:
 
     def __str__(self):
         return "(" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ")"
+
+if __name__ == "__main__":
+    print("This module is not for direct call!")

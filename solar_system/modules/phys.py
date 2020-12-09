@@ -2,6 +2,12 @@ G = 6.67430*10**(-11)
 
 
 def calculate_force(space_objects):
+    '''Calculate force that move all objects in space objects.  
+                              
+    Parameters:
+        
+    **space_objects** - list of space objects.
+    '''
     local = space_objects
     for i, body in enumerate(local):
         body.force[0] = 0
