@@ -1,7 +1,7 @@
 import pygame as pg
 from modules import manager
 
-SCREEN_SIZE = (800, 500)
+SCREEN_SIZE = (1200, 700)
 FPS = 60
 
 pg.init()

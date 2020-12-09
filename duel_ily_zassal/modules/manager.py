@@ -25,6 +25,7 @@ class Manager():
         if self.pause == True:
             self.pause_window.set_pause(self.screen, self.screensize)
 
+
         if self.game is not True:
             self.menu.set_menu(self.screen, self.screensize)
 
@@ -32,17 +33,18 @@ class Manager():
             self.back.set_background()
             self.hp.draw()
 
-        self.field.calculate_force(self.charges)
-        if self.pause == False:
+            self.field.calculate_force(self.charges)
+
             for charge in self.charges:
                 charge.create()
                 charge.move(0.01)
 
+            pos = pg.mouse.get_pos()
+            self.menu.mouse_gun(pos, self.screen)
+
         for charge in self.charges:
             if charge.coord.z > charge.ground:
                 self.charges.remove(charge)
-
-        for charge in self.charges:
             if charge.size < 2 and self.pause == False:
                 self.charges.remove(charge)
 
@@ -56,6 +58,8 @@ class Manager():
 
             if event.type == pg.QUIT:
                 done = True
+
+
 
             if self.menu.quit_button.activated:
                 self.menu.quit_button.click(events, self.quit_b)
@@ -86,9 +90,7 @@ class Manager():
             if self.menu.play_button.activated:
                 self.menu.play_button.click(events, self.play)
                 
-            if self.game == True:
-                pos = pg.mouse.get_pos()    
-                self.menu.mouse_gun(pos, self.screen)  
+
                    
         return done
 
