@@ -7,6 +7,7 @@ class Charge():
 
     def __init__(self, m_c, e_c, screen, coord, color):
         self.size = 10
+        self.size_save = 10
         self.m_c = m_c
         self.e_c = e_c
         self.vel = vectors.Vector(0, 100, 0)
@@ -25,6 +26,12 @@ class Charge():
         self.coord += self.vel * dt
         self.vel += self.force * (1 / self.mass) * dt
         self.size = 1000 / self.coord.y
+        self.size_save = self.size
+    def hide(self):
+        self.size = 0
+
+    def became(self):
+        self.size = self.size_save
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
