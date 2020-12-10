@@ -13,15 +13,14 @@ class Pushkin():
 
 class Dantes():
 
-    def __init__(self):
+    def __init__(self, scr_size):
         self.hp = 100
-        self.coords = [420, 500, 290]
+        self.coords = [scr_size[0]/2  + 20, 500, scr_size[1]/2 + 40]
         
         
     def create(self, scr):
         dantes_surf = pg.image.load(os.path.join("Images", "dantes.png"))
         scr.blit(dantes_surf, (self.coords[0] - 35, self.coords[2]))
-    
 
 
 if __name__ == "__main__":
