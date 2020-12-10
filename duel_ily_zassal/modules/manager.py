@@ -18,13 +18,14 @@ class Manager():
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
         self.dantes = fighters.Dantes()
+        self.pushkin = fighters.Pushkin()
         self.hp = gui.Progress_bar((int(screensize[0]/4), 20), (int(screensize[0]/2), 20),
                                    self.dantes.hp, screen)
 
     def process(self, events):
+
         if self.pause == True:
             self.pause_window.set_pause(self.screen, self.screensize)
-
 
         if self.game is not True:
             self.menu.set_menu(self.screen, self.screensize)
@@ -40,7 +41,7 @@ class Manager():
                 charge.move(0.01)
 
             pos = pg.mouse.get_pos()
-            self.menu.mouse_gun(pos, self.screen)
+            self.pushkin.mouse_gun(pos, self.screen, self.screensize)
 
         for charge in self.charges:
             if charge.coord.z > charge.ground:
