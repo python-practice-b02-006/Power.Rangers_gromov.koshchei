@@ -13,12 +13,12 @@ class Manager():
         self.pause = False
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
-        self.field = fields.Field((70, 70, 70), (100, 100, 100))
+        self.field = fields.Field((0, 0, 0), (0, 0, 0))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
         self.dantes = fighters.Dantes(self.screensize)
-        self.pushkin = fighters.Pushkin()
+        self.pushkin = fighters.Pushkin(self.screen, self.screensize)
         self.hp = gui.Progress_bar((int(screensize[0]/4), 20), (int(screensize[0]/2), 20),
                                    self.dantes.hp, screen)
 
@@ -41,7 +41,7 @@ class Manager():
                 charge.create()
                 charge.move(0.01)
 
-            self.pushkin.mouse_gun(self.screen, self.screensize)
+            self.pushkin.mouse_gun()
 
         for charge in self.charges:
             if charge.coord.z > charge.ground:
@@ -62,8 +62,6 @@ class Manager():
             if event.type == pg.QUIT:
                 done = True
 
-
-
             if self.menu.quit_button.activated:
                 self.menu.quit_button.click(events, self.quit_b)
                 done = self.done
@@ -72,18 +70,19 @@ class Manager():
                 self.pause_window.quit_button.click(events, self.quit_b)
                 done = self.done
 
-            if self.pause == False and self.game == True:
+            if not self.pause and self.game:
 
                 if event.type == pg.KEYDOWN:
-                     if event.key == pg.K_ESCAPE:
+
+                    if event.key == pg.K_ESCAPE:
                         self.pause_g()
+
                 if event.type == pg.MOUSEBUTTONDOWN:
 
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
                         self.hp.level -= 10
-
 
             if self.pause_window.continue_button.activated:
                 for charge in self.charges:
@@ -99,18 +98,22 @@ class Manager():
         self.done = True
 
     def play(self):
+        pg.mouse.set_cursor(*pg.cursors.diamond)
         self.game = True
 
     def pause_g(self):
+        pg.mouse.set_cursor(*pg.cursors.arrow)
         for charge in self.charges:
             charge.hide()
         self.pause = True
 
     def resume(self):
+        pg.mouse.set_cursor(*pg.cursors.arrow)
         self.pause = False
 
     def add_charge(self, pos):
-        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]), (255, 255, 255), self.screensize))
+        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]),
+                                           (255, 255, 255), self.screensize))
 
 
 if __name__ == "__main__":

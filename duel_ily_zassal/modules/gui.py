@@ -49,9 +49,9 @@ class Progress_bar():
 
      def draw(self):
          pg.draw.rect(self.screen, (255,255,255), (self.coord, self.size), 0)
-         if self.level <=0:
+         if self.level <= 0:
              self.level = 0
-         pg.draw.rect(self.screen, (0, 0, 0 ),
+         pg.draw.rect(self.screen, (0, 0, 0),
                       (self.coord, (int(self.size[0]*self.level/self.lev_max), self.size[1])), 0)
 
 
