@@ -27,7 +27,7 @@ class Charge():
     def move(self, dt):
         self.coord += self.vel * dt
         self.vel += self.force * (1 / self.mass) * dt
-        self.size = 1000 / self.coord.y
+        self.size = abs(1000 / self.coord.y)
         self.size_save = self.size
         self.ground = int(self.screensize[1] / 1.85 + self.size * self.screensize[1] / 50)
 

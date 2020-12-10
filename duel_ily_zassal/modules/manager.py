@@ -13,7 +13,7 @@ class Manager():
         self.pause = False
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
-        self.field = fields.Field((10, 10, 10), (100, 100, 100))
+        self.field = fields.Field((20, 20, 20), (0, 0, 0))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
