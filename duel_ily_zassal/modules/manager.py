@@ -13,15 +13,17 @@ class Manager():
         self.pause = False
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
-        self.field = fields.Field((10, 10, 10), (100, 100, 100))
+        self.field = fields.Field((20, 20, 20), (0, 0, 0))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
         self.dantes = fighters.Dantes()
+        self.pushkin = fighters.Pushkin()
         self.hp = gui.Progress_bar((int(screensize[0]/4), 20), (int(screensize[0]/2), 20),
                                    self.dantes.hp, screen)
 
     def process(self, events):
+
         if self.pause == True:
             self.pause_window.set_pause(self.screen, self.screensize)
             
@@ -41,14 +43,17 @@ class Manager():
 
         self.field.calculate_force(self.charges)
         if self.pause == False:
+            self.field.calculate_force(self.charges)
             for charge in self.charges:
                 charge.create()
                 charge.move(0.01)
 
+            pos = pg.mouse.get_pos()
+            self.pushkin.mouse_gun(pos, self.screen, self.screensize)
+
         for charge in self.charges:
             if charge.coord.z > charge.ground:
                 self.charges.remove(charge)
- 
 
         for charge in self.charges:
             if charge.size < 2 and self.pause == False:
@@ -64,6 +69,8 @@ class Manager():
 
             if event.type == pg.QUIT:
                 done = True
+
+
 
             if self.menu.quit_button.activated:
                 self.menu.quit_button.click(events, self.quit_b)
@@ -93,7 +100,6 @@ class Manager():
                 
             if self.menu.play_button.activated:
                 self.menu.play_button.click(events, self.play)
-                
                    
         return done
 
