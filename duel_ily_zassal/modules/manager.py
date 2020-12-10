@@ -24,6 +24,8 @@ class Manager():
     def process(self, events):
         if self.pause == True:
             self.pause_window.set_pause(self.screen, self.screensize)
+            
+ 
 
         if self.game is not True:
             self.menu.set_menu(self.screen, self.screensize)
@@ -31,6 +33,11 @@ class Manager():
         if self.game == True and self.pause == False:
             self.back.set_background()
             self.hp.draw()
+
+        if self.game == True:
+                pos = pg.mouse.get_pos()   
+                self.menu.mouse_gun(pos, self.screen)
+                self.dantes.create(self.screen)
 
         self.field.calculate_force(self.charges)
         if self.pause == False:
@@ -41,11 +48,12 @@ class Manager():
         for charge in self.charges:
             if charge.coord.z > charge.ground:
                 self.charges.remove(charge)
+ 
 
         for charge in self.charges:
             if charge.size < 2 and self.pause == False:
                 self.charges.remove(charge)
-
+                
         done = self.event_handler(events)
 
         return done
@@ -86,9 +94,6 @@ class Manager():
             if self.menu.play_button.activated:
                 self.menu.play_button.click(events, self.play)
                 
-            if self.game == True:
-                pos = pg.mouse.get_pos()    
-                self.menu.mouse_gun(pos, self.screen)  
                    
         return done
 
