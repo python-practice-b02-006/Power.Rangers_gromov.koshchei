@@ -24,34 +24,31 @@ class Manager():
 
     def process(self, events):
 
-        if self.pause == True:
+        if self.pause:
             self.pause_window.set_pause(self.screen, self.screensize)
-            
- 
 
-        if self.game is not True:
+        if not self.game:
             self.menu.set_menu(self.screen, self.screensize)
 
-        self.field.calculate_force(self.charges)
-        if self.pause == False and self.game == True:
+        if not self.pause and self.game:
             self.back.set_background()
             self.hp.draw()
-        if self.game == True:
+
             self.dantes.create(self.screen)
-        if self.pause == False and self.game == True:
+
             self.field.calculate_force(self.charges)
             for charge in self.charges:
                 charge.create()
                 charge.move(0.01)
-            pos = pg.mouse.get_pos()
-            self.pushkin.mouse_gun(pos, self.screen, self.screensize)
+
+            self.pushkin.mouse_gun(self.screen, self.screensize)
 
         for charge in self.charges:
             if charge.coord.z > charge.ground:
                 self.charges.remove(charge)
 
         for charge in self.charges:
-            if charge.size < 2 and self.pause == False:
+            if charge.size < 2 and not self.pause:
                 self.charges.remove(charge)
                 
         done = self.event_handler(events)
