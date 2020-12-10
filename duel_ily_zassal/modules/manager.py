@@ -2,7 +2,6 @@ from modules import gui, charges, fields, menu, background, pause, fighters
 import pygame as pg
 import easygui
 
-
 class Manager():
 
     def __init__(self, screen, screensize):
@@ -11,13 +10,14 @@ class Manager():
         self.done = False
         self.game = False
         self.pause = False
+        self.all_sprites = pg.sprite.Group() 
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
         self.field = fields.Field((70, 70, 70), (100, 100, 100))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
-        self.dantes = fighters.Dantes(self.screensize)
+        self.dantes = fighters.Dantes(self.screensize, 'dantes.png', self.all_sprites)
         self.pushkin = fighters.Pushkin()
         self.hp = gui.Progress_bar((int(screensize[0]/4), 20), (int(screensize[0]/2), 20),
                                    self.dantes.hp, screen)
@@ -27,21 +27,20 @@ class Manager():
         if self.pause == True:
             self.pause_window.set_pause(self.screen, self.screensize)
             
- 
-
         if self.game is not True:
             self.menu.set_menu(self.screen, self.screensize)
 
         self.field.calculate_force(self.charges)
+        
         if self.pause == False and self.game == True:
             self.back.set_background()
             self.hp.draw()
-        if self.game == True:
-            self.dantes.create(self.screen)
+            self.all_sprites.draw(self.screen)
+
+            
         if self.pause == False and self.game == True:
             self.field.calculate_force(self.charges)
             for charge in self.charges:
-                charge.create()
                 charge.move(0.01)
             pos = pg.mouse.get_pos()
             self.pushkin.mouse_gun(pos, self.screen, self.screensize)
@@ -113,7 +112,7 @@ class Manager():
         self.pause = False
 
     def add_charge(self, pos):
-        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]), (255, 255, 255), self.screensize))
+        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0]-70, 10, pos[1]-70), (255, 255, 255), self.screensize, 'bullet.png', self.all_sprites))
 
 
 if __name__ == "__main__":
