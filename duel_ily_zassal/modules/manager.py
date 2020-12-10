@@ -13,7 +13,7 @@ class Manager():
         self.pause = False
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
-        self.field = fields.Field((20, 20, 20), (0, 0, 0))
+        self.field = fields.Field((70, 70, 70), (100, 100, 100))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
@@ -32,20 +32,17 @@ class Manager():
         if self.game is not True:
             self.menu.set_menu(self.screen, self.screensize)
 
-        if self.game == True and self.pause == False:
+        self.field.calculate_force(self.charges)
+        if self.pause == False and self.game == True:
             self.back.set_background()
             self.hp.draw()
-
         if self.game == True:
-                self.dantes.create(self.screen)
-
-        self.field.calculate_force(self.charges)
-        if self.pause == False:
+            self.dantes.create(self.screen)
+        if self.pause == False and self.game == True:
             self.field.calculate_force(self.charges)
             for charge in self.charges:
                 charge.create()
                 charge.move(0.01)
-
             pos = pg.mouse.get_pos()
             self.pushkin.mouse_gun(pos, self.screen, self.screensize)
 
