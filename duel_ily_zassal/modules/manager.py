@@ -37,8 +37,6 @@ class Manager():
             self.hp.draw()
 
         if self.game == True:
-                pos = pg.mouse.get_pos()   
-                self.menu.mouse_gun(pos, self.screen)
                 self.dantes.create(self.screen)
 
         self.field.calculate_force(self.charges)
