@@ -3,6 +3,7 @@ from modules import manager
 
 SCREEN_SIZE = (1200, 700)
 FPS = 60
+global all_sprites
 
 pg.init()
 SCREEN = pg.display.set_mode(SCREEN_SIZE)

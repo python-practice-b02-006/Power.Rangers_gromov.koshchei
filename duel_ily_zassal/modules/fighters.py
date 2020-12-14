@@ -11,16 +11,15 @@ class Pushkin():
         scr.blit(gun_surf, (screensize[0]/2 - gun_rect[2], screensize[1] - 2*gun_rect[3]))
 
 
-class Dantes():
+class Dantes(pg.sprite.Sprite):
 
-    def __init__(self, scr_size):
+    def __init__(self, scr_size, filename, all_sprites):
+        super().__init__(all_sprites)
         self.hp = 100
-        self.coords = [scr_size[0]/2  + 20, 500, scr_size[1]/2 + 40]
-        
-        
-    def create(self, scr):
-        dantes_surf = pg.image.load(os.path.join("Images", "dantes.png"))
-        scr.blit(dantes_surf, (self.coords[0] - 35, self.coords[2]))
+        self.image = pg.image.load(os.path.join("Images", filename))
+        self.coords = [self.image.get_rect()[0]+scr_size[0]/2, self.image.get_rect()[1]+4*scr_size[1]/7]        
+        self.rect = self.coords
+        self.mask = pg.mask.from_surface(self.image)        
 
 
 if __name__ == "__main__":
