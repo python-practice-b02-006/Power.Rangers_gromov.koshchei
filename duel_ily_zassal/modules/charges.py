@@ -45,8 +45,8 @@ class Charge(pg.sprite.Sprite):
         
     def update(self, dantes):
         if pg.sprite.collide_mask(self, dantes):
-            self.kill()
             if self.coord.y > 100 and self.coord.y < 140:
+                self.kill()
                 dantes.hp -= 50
                 print('Ouch')
 
