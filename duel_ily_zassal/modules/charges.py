@@ -106,6 +106,9 @@ class D_charge(pg.sprite.Sprite):
         self.ground = int(self.screensize[1] / 1.85 + self.size * self.screensize[1] / 50)
         self.mask = pg.mask.from_surface(self.image)
 
+    def interract(self, charges):
+        pass
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
