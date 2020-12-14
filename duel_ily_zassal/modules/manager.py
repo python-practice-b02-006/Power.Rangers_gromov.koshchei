@@ -10,7 +10,8 @@ class Manager():
         self.done = False
         self.game = False
         self.pause = False
-        self.all_sprites = pg.sprite.Group()
+        self.group1 = pg.sprite.Group()
+        self.group2 = pg.sprite.Group()
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
         self.d_charges = []
@@ -19,7 +20,7 @@ class Manager():
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
         self.dantes = fighters.Dantes(self.screensize, 'dantes.png')
-        self.all_sprites.add(self.dantes)
+        self.group2.add(self.dantes)
         self.pushkin = fighters.Pushkin()
         self.hp = gui.Progress_bar((int(screensize[0]/4), 20), (int(screensize[0]/2), 20),
                                    self.dantes.hp, screen)
@@ -37,8 +38,9 @@ class Manager():
         if self.pause == False and self.game == True:
             self.back.set_background()
             self.hp.draw()
-            self.all_sprites.draw(self.screen)
-            self.all_sprites.update(self.dantes)
+            self.group2.draw(self.screen)
+            self.group1.draw(self.screen)
+            self.group1.update(self.dantes, self.group2)
             self.pushkin.mouse_gun(self.screen, self.screensize)
             self.dantes.check_dantes_hp()
             self.field.change_field()
@@ -50,37 +52,37 @@ class Manager():
             for i, charge in enumerate(self.charges):
                 if charge.size < 5 and not self.pause:
                     self.charges.remove(charge)
-                    self.all_sprites.remove(charge)
+                    self.group1.remove(charge)
                 if charge.coord.z > charge.ground:
                     self.charges.remove(charge)
-                    self.all_sprites.remove(charge)
+                    self.group1.remove(charge)
                 if charge.disappear():
                     self.charges.remove(charge)
-                    self.all_sprites.remove(charge)
+                    self.group1.remove(charge)
 
 
             if len(self.d_charges) == 0 and self.dantes.hp > 0:
                 self.d_charges.append(charges.D_charge(0, 1, self.screen, (255, 255, 255), self.screensize, self.dantes.coords))
-                self.all_sprites.add(self.d_charges[-1])
+                self.group2.add(self.d_charges[-1])
 
             for d_charge in self.d_charges:
                 d_charge.move(0.01)
                 if d_charge.coord.y < 0:
                     self.d_charges.remove(d_charge)
-                    self.all_sprites.remove(d_charge)
+                    self.group2.remove(d_charge)
             if len(self.charges) > 0:
                 for d_charge in self.d_charges:
                     d_charge.move(0.01)
                     if d_charge.coord.y < 0:
                         self.d_charges.remove(d_charge)
-                        self.all_sprites.remove(d_charge)
+                        self.group2.remove(d_charge)
                     for charge in self.charges:
                         if pg.sprite.collide_mask(charge, d_charge):
                             if charge.size == d_charge.size:
                                 self.charges.remove(charge)
-                                self.all_sprites.remove(charge)
+                                self.group1.remove(charge)
                                 self.d_charges.remove(d_charge)
-                                self.all_sprites.remove(d_charge)
+                                self.group2.remove(d_charge)
                 
         done = self.event_handler(events)
 
@@ -130,8 +132,7 @@ class Manager():
                 if event.type == pg.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
-                        vel = ((pos[0] - self.screensize[0]/2)*1., 70, -3*((pos[0] - self.screensize[0]/2)**2 + 4900)**(1/2))
-                        self.add_charge(vel)
+                        self.add_charge(pos)
                         
                 self.hp.level = self.dantes.hp
 
@@ -161,7 +162,7 @@ class Manager():
 
     def add_charge(self, pos):
         self.charges.append(charges.Charge(0, 10, self.screen, (pos[0], 5, pos[1]), (255, 255, 255), self.screensize))
-        self.all_sprites.add(self.charges[-1])
+        self.group1.add(self.charges[-1])
 
 
 if __name__ == "__main__":
