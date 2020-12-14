@@ -11,11 +11,11 @@ class Charge(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.m_c = m_c
         self.e_c = e_c
-        self.vel = vectors.Vector(0, 100, 0)
+        self.vel = vectors.Vector(-screensize[0]/2 + coord[0], 10, -coord[2])
         self.accel = vectors.Vector(0, 0, 0)
         self.mass = 10
         self.size = abs(1000 / coord[1])
-        self.coord = vectors.Vector(coord[0], 10, coord[2])
+        self.coord = vectors.Vector(screensize[0]/2, 10, 600)
         self.damage = 1
         self.color = color
         self.screen = screen
