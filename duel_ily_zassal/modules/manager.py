@@ -10,10 +10,10 @@ class Manager():
         self.done = False
         self.game = False
         self.pause = False
-        self.all_sprites = pg.sprite.Group() 
+        self.all_sprites = pg.sprite.Group()
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
-        self.field = fields.Field((70, 70, 70), (100, 100, 100))
+        self.field = fields.Field((100, 100, 100), (100, 100, 100))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
@@ -36,15 +36,13 @@ class Manager():
             self.back.set_background()
             self.hp.draw()
             self.all_sprites.draw(self.screen)
-
+            self.pushkin.mouse_gun(self.screen, self.screensize)
             
         if self.pause == False and self.game == True:
-          
+
             self.field.calculate_force(self.charges)
             for charge in self.charges:
                 charge.move(0.01)
-
-            self.pushkin.mouse_gun(self.screen, self.screensize)
 
         for charge in self.charges:
             if charge.coord.z > charge.ground:
@@ -65,8 +63,6 @@ class Manager():
             if event.type == pg.QUIT:
                 done = True
 
-
-
             if self.menu.quit_button.activated:
                 self.menu.quit_button.click(events, self.quit_b)
                 done = self.done
@@ -86,7 +82,6 @@ class Manager():
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
                         self.hp.level -= 10
-
 
             if self.pause_window.continue_button.activated:
                 for charge in self.charges:
@@ -113,7 +108,8 @@ class Manager():
         self.pause = False
 
     def add_charge(self, pos):
-        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0]-70, 10, pos[1]-70), (255, 255, 255), self.screensize, 'bullet.png', self.all_sprites))
+        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]), (255, 255, 255), self.screensize))
+        self.all_sprites.add(self.charges[-1])
 
 
 if __name__ == "__main__":
