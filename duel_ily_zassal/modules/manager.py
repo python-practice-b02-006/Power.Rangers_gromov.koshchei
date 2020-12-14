@@ -13,6 +13,7 @@ class Manager():
         self.all_sprites = pg.sprite.Group()
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
+        self.d_charges = []
         self.field = fields.Field((0, 0, 0), (0, 0, 0))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
@@ -51,6 +52,17 @@ class Manager():
                 if charge.coord.z > charge.ground:
                     self.charges.remove(charge)
                     self.all_sprites.remove(charge)
+
+            if len(self.d_charges) == 0 and self.dantes.hp > 0:
+                self.d_charges.append(charges.D_charge(0, 1, self.screen, (255, 255, 255), self.screensize, self.dantes.coords))
+                self.all_sprites.add(self.d_charges[-1])
+
+            for d_charge in self.d_charges:
+                d_charge.move(0.01)
+                if d_charge.coord.y < 0:
+                    self.d_charges.remove(d_charge)
+                    self.all_sprites.remove(d_charge)
+
                 
         done = self.event_handler(events)
 
