@@ -36,6 +36,7 @@ class Manager():
             self.back.set_background()
             self.hp.draw()
             self.all_sprites.draw(self.screen)
+            self.all_sprites.update(self.dantes)
             self.pushkin.mouse_gun(self.screen, self.screensize)
             
         if self.pause == False and self.game == True:
@@ -114,4 +115,3 @@ class Manager():
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
-

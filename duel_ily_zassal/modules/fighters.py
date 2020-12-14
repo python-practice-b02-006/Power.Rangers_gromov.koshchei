@@ -17,7 +17,7 @@ class Dantes(pg.sprite.Sprite):
         super().__init__(all_sprites)
         self.hp = 100
         self.image = pg.image.load(os.path.join("Images", filename))
-        self.coords = [self.image.get_rect()[0]+scr_size[0]/2, self.image.get_rect()[1]+4*scr_size[1]/7]        
+        self.coords = [int(self.image.get_rect()[0]+scr_size[0]/2), int(self.image.get_rect()[1]+4*scr_size[1]/7)]        
         self.rect = self.coords
         self.mask = pg.mask.from_surface(self.image)        
 

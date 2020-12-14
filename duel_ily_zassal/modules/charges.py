@@ -29,7 +29,7 @@ class Charge(pg.sprite.Sprite):
         self.rect.center = (self.coord.x, self.coord.z)
         #self.image = pg.Surface( (self.size_save, self.size_save), )
         #self.rect = (int(self.coord.x) - self.image.get_rect()[0]/2, int(self.coord.z)-self.image.get_rect()[1]/2)
-        #self.mask = pg.mask.from_surface(self.image)
+        self.mask = pg.mask.from_surface(self.image)
 
     def move(self, dt):
         self.coord += self.vel * dt
@@ -42,6 +42,10 @@ class Charge(pg.sprite.Sprite):
         self.rect.center = (self.coord.x, self.coord.z)
         self.ground = int(self.screensize[1] / 1.85 + self.size * self.screensize[1] / 50)
         self.mask = pg.mask.from_surface(self.image)
+        
+    def update(self, dantes):
+        if pg.sprite.collide_mask(self, dantes):
+            print("pls")
 
     def hide(self):
         self.size = 0
