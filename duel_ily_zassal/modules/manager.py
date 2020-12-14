@@ -62,6 +62,21 @@ class Manager():
                 if d_charge.coord.y < 0:
                     self.d_charges.remove(d_charge)
                     self.all_sprites.remove(d_charge)
+            if len(self.charges) > 0:
+                for d_charge in self.d_charges:
+                    d_charge.move(0.01)
+                    if d_charge.coord.y < 0:
+                        self.d_charges.remove(d_charge)
+                        self.all_sprites.remove(d_charge)
+                    for charge in self.charges:
+                        if pg.sprite.collide_mask(charge, d_charge):
+                            if charge.size == d_charge.size:
+                                self.charges.remove(charge)
+                                self.all_sprites.remove(charge)
+                                self.d_charges.remove(d_charge)
+                                self.all_sprites.remove(d_charge)
+
+
 
                 
         done = self.event_handler(events)
@@ -92,7 +107,8 @@ class Manager():
 
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
-                        self.add_charge(pos)
+                        vel = ((pos[0] - self.screensize[0]/2)*1., 70, -3*((pos[0] - self.screensize[0]/2)**2 + 4900)**(1/2))
+                        self.add_charge(vel)
                         
                 self.hp.level = self.dantes.hp
 
@@ -120,8 +136,8 @@ class Manager():
     def resume(self):
         self.pause = False
 
-    def add_charge(self, pos):
-        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]), (255, 255, 255), self.screensize))
+    def add_charge(self, vel):
+        self.charges.append(charges.Charge(0, 1, self.screen, (255, 255, 255), self.screensize, vel))
         self.all_sprites.add(self.charges[-1])
 
 

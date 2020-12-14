@@ -7,15 +7,15 @@ pg.init()
 
 class Charge(pg.sprite.Sprite):
 
-    def __init__(self, m_c, e_c, screen, coord, color, screensize):
+    def __init__(self, m_c, e_c, screen, color, screensize, vel):
         pg.sprite.Sprite.__init__(self)
         self.m_c = m_c
         self.e_c = e_c
-        self.vel = vectors.Vector(-screensize[0]/2 + coord[0], 100, -coord[2])
         self.accel = vectors.Vector(0, 0, 0)
         self.mass = 10
-        self.size = abs(1000 / coord[1])
-        self.coord = vectors.Vector(screensize[0]/2, 10, 600)
+        self.coord = vectors.Vector(screensize[0]/2, 10, 500)
+        self.vel = vectors.Vector(vel[0], vel[1], vel[2] / (self.coord.y)**(1/5))
+        self.size = abs(1000 / self.coord.y)
         self.damage = 1
         self.color = color
         self.screen = screen
@@ -42,7 +42,7 @@ class Charge(pg.sprite.Sprite):
         self.rect.center = (self.coord.x, self.coord.z)
         self.ground = int(self.screensize[1] / 1.85 + self.size * self.screensize[1] / 50)
         self.mask = pg.mask.from_surface(self.image)
-        if self.size < 18:
+        if self.size < 16:
             self.vel.z = 3
         
     def update(self, dantes):
