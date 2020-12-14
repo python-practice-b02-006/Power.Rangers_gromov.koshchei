@@ -39,8 +39,8 @@ class Manager():
             self.all_sprites.update(self.dantes)
             self.pushkin.mouse_gun(self.screen, self.screensize)
             self.dantes.check_dantes_hp()
-
             self.field.calculate_force(self.charges)
+            
             for charge in self.charges:
                 charge.move(0.01)
 
