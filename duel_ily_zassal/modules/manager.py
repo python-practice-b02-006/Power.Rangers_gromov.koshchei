@@ -2,7 +2,6 @@ from modules import gui, charges, fields, menu, background, pause, fighters
 import pygame as pg
 import easygui
 
-
 class Manager():
 
     def __init__(self, screen, screensize):
@@ -11,14 +10,15 @@ class Manager():
         self.done = False
         self.game = False
         self.pause = False
+        self.all_sprites = pg.sprite.Group() 
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
-        self.field = fields.Field((0, 0, 0), (0, 0, 0))
+        self.field = fields.Field((70, 70, 70), (100, 100, 100))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
-        self.dantes = fighters.Dantes(self.screensize)
-        self.pushkin = fighters.Pushkin(self.screen, self.screensize)
+        self.dantes = fighters.Dantes(self.screensize, 'dantes.png', self.all_sprites)
+        self.pushkin = fighters.Pushkin()
         self.hp = gui.Progress_bar((int(screensize[0]/4), 20), (int(screensize[0]/2), 20),
                                    self.dantes.hp, screen)
 
@@ -26,22 +26,25 @@ class Manager():
 
         if self.pause:
             self.pause_window.set_pause(self.screen, self.screensize)
-
-        if not self.game:
+            
+        if self.game is not True:
             self.menu.set_menu(self.screen, self.screensize)
 
-        if not self.pause and self.game:
+        self.field.calculate_force(self.charges)
+        
+        if self.pause == False and self.game == True:
             self.back.set_background()
             self.hp.draw()
+            self.all_sprites.draw(self.screen)
 
-            self.dantes.create(self.screen)
-
+            
+        if self.pause == False and self.game == True:
+          
             self.field.calculate_force(self.charges)
             for charge in self.charges:
-                charge.create()
                 charge.move(0.01)
 
-            self.pushkin.mouse_gun()
+            self.pushkin.mouse_gun(self.screen, self.screensize)
 
         for charge in self.charges:
             if charge.coord.z > charge.ground:
@@ -62,6 +65,8 @@ class Manager():
             if event.type == pg.QUIT:
                 done = True
 
+
+
             if self.menu.quit_button.activated:
                 self.menu.quit_button.click(events, self.quit_b)
                 done = self.done
@@ -70,19 +75,18 @@ class Manager():
                 self.pause_window.quit_button.click(events, self.quit_b)
                 done = self.done
 
-            if not self.pause and self.game:
+            if self.pause == False and self.game == True:
 
                 if event.type == pg.KEYDOWN:
-
-                    if event.key == pg.K_ESCAPE:
+                     if event.key == pg.K_ESCAPE:
                         self.pause_g()
-
                 if event.type == pg.MOUSEBUTTONDOWN:
 
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
                         self.hp.level -= 10
+
 
             if self.pause_window.continue_button.activated:
                 for charge in self.charges:
@@ -98,22 +102,18 @@ class Manager():
         self.done = True
 
     def play(self):
-        pg.mouse.set_cursor(*pg.cursors.diamond)
         self.game = True
 
     def pause_g(self):
-        pg.mouse.set_cursor(*pg.cursors.arrow)
         for charge in self.charges:
             charge.hide()
         self.pause = True
 
     def resume(self):
-        pg.mouse.set_cursor(*pg.cursors.arrow)
         self.pause = False
 
     def add_charge(self, pos):
-        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0], 10, pos[1]),
-                                           (255, 255, 255), self.screensize))
+        self.charges.append(charges.Charge(0, 1, self.screen, (pos[0]-70, 10, pos[1]-70), (255, 255, 255), self.screensize, 'bullet.png', self.all_sprites))
 
 
 if __name__ == "__main__":

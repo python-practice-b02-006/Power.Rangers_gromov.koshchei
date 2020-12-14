@@ -1,31 +1,25 @@
 import pygame as pg
 import os
 
-
 class Pushkin():
 
-    def __init__(self, scr, screensize):
-        self.gun_surf = pg.image.load(os.path.join("Images", "gun.png"))
-        self.gun_rect = self.gun_surf.get_rect()
-        self.scr = scr
-        self.screensize = screensize
-
-    def mouse_gun(self):
-        gun_surf = pg.transform.scale(self.gun_surf, (2*self.gun_rect[2], 2*self.gun_rect[3]))
-        self.scr.blit(gun_surf,
-                      (self.screensize[0]/2 - self.gun_rect[2], self.screensize[1] - 2*self.gun_rect[3]))
+    def mouse_gun(self, scr, screensize):
+        gun_surf = pg.image.load(os.path.join("Images", "gun.png"))
+        gun_rect = gun_surf.get_rect()
+        pg.mouse.set_cursor(*pg.cursors.diamond)
+        gun_surf = pg.transform.scale(gun_surf, (2*gun_rect[2], 2*gun_rect[3]))
+        scr.blit(gun_surf, (screensize[0]/2 - gun_rect[2], screensize[1] - 2*gun_rect[3]))
 
 
-class Dantes():
+class Dantes(pg.sprite.Sprite):
 
-    def __init__(self, scr_size):
+    def __init__(self, scr_size, filename, all_sprites):
+        super().__init__(all_sprites)
         self.hp = 100
-        self.coords = [scr_size[0]/2 + 20, 500, scr_size[1]/2 + 40]
-        
-        
-    def create(self, scr):
-        dantes_surf = pg.image.load(os.path.join("Images", "dantes.png"))
-        scr.blit(dantes_surf, (self.coords[0] - 35, self.coords[2]))
+        self.image = pg.image.load(os.path.join("Images", filename))
+        self.coords = [self.image.get_rect()[0]+scr_size[0]/2, self.image.get_rect()[1]+4*scr_size[1]/7]        
+        self.rect = self.coords
+        self.mask = pg.mask.from_surface(self.image)        
 
 
 if __name__ == "__main__":
