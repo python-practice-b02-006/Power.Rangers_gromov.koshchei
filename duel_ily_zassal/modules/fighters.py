@@ -13,8 +13,8 @@ class Pushkin():
 
 class Dantes(pg.sprite.Sprite):
 
-    def __init__(self, scr_size, filename, all_sprites):
-        super().__init__(all_sprites)
+    def __init__(self, scr_size, filename):
+        pg.sprite.Sprite.__init__(self)
         self.hp = 100
         self.image = pg.image.load(os.path.join("Images", filename))
         self.coords = [int(self.image.get_rect()[0]+scr_size[0]/2), int(self.image.get_rect()[1]+4*scr_size[1]/7)]        

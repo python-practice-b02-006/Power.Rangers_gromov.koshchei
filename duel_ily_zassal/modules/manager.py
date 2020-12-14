@@ -18,7 +18,8 @@ class Manager():
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
-        self.dantes = fighters.Dantes(self.screensize, 'dantes.png', self.all_sprites)
+        self.dantes = fighters.Dantes(self.screensize, 'dantes.png')
+        self.all_sprites.add(self.dantes)
         self.pushkin = fighters.Pushkin()
         self.hp = gui.Progress_bar((int(screensize[0]/4), 20), (int(screensize[0]/2), 20),
                                    self.dantes.hp, screen)
@@ -40,6 +41,7 @@ class Manager():
             self.all_sprites.update(self.dantes)
             self.pushkin.mouse_gun(self.screen, self.screensize)
             self.dantes.check_dantes_hp()
+            self.field.change_field()
             self.field.calculate_force(self.charges)
             
             for charge in self.charges:
@@ -52,6 +54,10 @@ class Manager():
                 if charge.coord.z > charge.ground:
                     self.charges.remove(charge)
                     self.all_sprites.remove(charge)
+                if charge.disappear():
+                    self.charges.remove(charge)
+                    self.all_sprites.remove(charge)
+
 
             if len(self.d_charges) == 0 and self.dantes.hp > 0:
                 self.d_charges.append(charges.D_charge(0, 1, self.screen, (255, 255, 255), self.screensize, self.dantes.coords))
@@ -75,9 +81,6 @@ class Manager():
                                 self.all_sprites.remove(charge)
                                 self.d_charges.remove(d_charge)
                                 self.all_sprites.remove(d_charge)
-
-
-
                 
         done = self.event_handler(events)
 
@@ -101,10 +104,30 @@ class Manager():
             if self.pause == False and self.game == True:
 
                 if event.type == pg.KEYDOWN:
-                     if event.key == pg.K_ESCAPE:
+                    if event.key == pg.K_ESCAPE:
                         self.pause_g()
+                    elif event.key == pg.K_RIGHT:
+                        self.field.change = True
+                        self.field.dir = 'r'
+                    elif event.key == pg.K_LEFT:
+                        self.field.change = True
+                        self.field.dir = 'l'
+                    elif event.key == pg.K_UP:
+                        self.field.change = True
+                        self.field.dir = 'u'
+                    elif event.key == pg.K_DOWN:
+                        self.field.change = True
+                        self.field.dir = 'd'
+                if event.type == pg.KEYUP:
+                    if event.key == pg.K_RIGHT:
+                        self.field.change = False
+                    elif event.key == pg.K_LEFT:
+                        self.field.change = False
+                    elif event.key == pg.K_UP:
+                        self.field.change = False
+                    elif event.key == pg.K_DOWN:
+                        self.field.change = False
                 if event.type == pg.MOUSEBUTTONDOWN:
-
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
                         vel = ((pos[0] - self.screensize[0]/2)*1., 70, -3*((pos[0] - self.screensize[0]/2)**2 + 4900)**(1/2))
@@ -136,8 +159,8 @@ class Manager():
     def resume(self):
         self.pause = False
 
-    def add_charge(self, vel):
-        self.charges.append(charges.Charge(0, 1, self.screen, (255, 255, 255), self.screensize, vel))
+    def add_charge(self, pos):
+        self.charges.append(charges.Charge(0, 10, self.screen, (pos[0], 5, pos[1]), (255, 255, 255), self.screensize))
         self.all_sprites.add(self.charges[-1])
 
 
