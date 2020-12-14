@@ -1,6 +1,5 @@
 import pygame as pg
 import os
-from modules import gui
 pg.init()
 
 
@@ -15,3 +14,6 @@ class Background():
         new_image = pg.transform.scale(SC_IMG, (self.screen_size))
         self.screen.blit(new_image, (0, 0))
 
+
+if __name__ == "__main__":
+    print("This module is not for direct call!")

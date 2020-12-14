@@ -27,5 +27,6 @@ class Dantes(pg.sprite.Sprite):
         if self.hp <= 0:
             self.image = pg.image.load(os.path.join("Images", 'dantes_damage2.png'))     
 
+
 if __name__ == "__main__":
     print("This module is not for direct call!")

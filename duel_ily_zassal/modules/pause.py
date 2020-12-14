@@ -10,6 +10,7 @@ class Pause():
                                       scr, (100, 50), (int((screensize[0] - 100)/2+30), int(2*(screensize[1] - 50)/3 +17)))
 
     def set_pause(self, scr, screensize):
+        pg.mouse.set_cursor(*pg.cursors.arrow)
         SC_IMG = pg.image.load(os.path.join("Images", "pause.jpg"))
         new_image = pg.transform.scale(SC_IMG, (screensize))
         scr.blit(new_image, (0, 0))
@@ -17,4 +18,7 @@ class Pause():
         self.continue_button.active()
         self.quit_button.create()
         self.quit_button.active()
-        
+
+
+if __name__ == "__main__":
+    print("This module is not for direct call!")
