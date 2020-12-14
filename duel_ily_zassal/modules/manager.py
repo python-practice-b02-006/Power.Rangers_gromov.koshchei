@@ -38,8 +38,9 @@ class Manager():
             self.all_sprites.draw(self.screen)
             self.all_sprites.update(self.dantes)
             self.pushkin.mouse_gun(self.screen, self.screensize)
-
+            self.dantes.check_dantes_hp()
             self.field.calculate_force(self.charges)
+            
             for charge in self.charges:
                 charge.move(0.01)
 
@@ -81,6 +82,7 @@ class Manager():
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
                         self.hp.level -= 10
+                        self.dantes.hp -= 10
 
             if self.pause_window.continue_button.activated:
                 for charge in self.charges:
