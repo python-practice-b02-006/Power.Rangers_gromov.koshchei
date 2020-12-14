@@ -13,7 +13,7 @@ class Manager():
         self.all_sprites = pg.sprite.Group()
         self.pause_window = pause.Pause(self.screen, self.screensize)
         self.charges = []
-        self.field = fields.Field((100, 100, 100), (100, 100, 100))
+        self.field = fields.Field((0, 0, 0), (0, 0, 0))
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
@@ -38,20 +38,18 @@ class Manager():
             self.all_sprites.draw(self.screen)
             self.all_sprites.update(self.dantes)
             self.pushkin.mouse_gun(self.screen, self.screensize)
-            
-        if self.pause == False and self.game == True:
 
             self.field.calculate_force(self.charges)
             for charge in self.charges:
                 charge.move(0.01)
 
-        for charge in self.charges:
-            if charge.coord.z > charge.ground:
-                self.charges.remove(charge)
-
-        for charge in self.charges:
-            if charge.size < 2 and not self.pause:
-                self.charges.remove(charge)
+            for i, charge in enumerate(self.charges):
+                if charge.size < 5 and not self.pause:
+                    self.charges.remove(charge)
+                    self.all_sprites.remove(charge)
+                if charge.coord.z > charge.ground:
+                    self.charges.remove(charge)
+                    self.all_sprites.remove(charge)
                 
         done = self.event_handler(events)
 
