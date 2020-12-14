@@ -7,11 +7,11 @@ pg.init()
 
 class Charge(pg.sprite.Sprite):
 
-    def __init__(self, m_c, e_c, screen, color, screensize, vel):
+    def __init__(self, m_c, e_c, screen, coord, color, screensize):
         pg.sprite.Sprite.__init__(self)
         self.m_c = m_c
         self.e_c = e_c
-        self.vel = vectors.Vector(0, 10, 0)
+        self.vel = vectors.Vector(0, 100, 0)
         self.accel = vectors.Vector(0, 0, 0)
         self.mass = 10
         self.size = abs(1000 / coord[1])
@@ -31,9 +31,7 @@ class Charge(pg.sprite.Sprite):
         self.mask = pg.mask.from_surface(self.image)
 
     def move(self, dt):
-        self.coord.y += self.vel.y * dt
-        self.coord.x += (1000 * self.vel.x / (self.coord.y + 600)) * dt
-        self.coord.z += self.vel.z * dt
+        self.coord += self.vel * dt
         self.vel += self.force * (1 / self.mass) * dt
         self.size = abs(1000 / self.coord.y)
         self.image = pg.image.load(os.path.join("Images", 'bullet.png')).convert()
@@ -44,11 +42,17 @@ class Charge(pg.sprite.Sprite):
         self.ground = int(self.screensize[1] / 1.85 + self.size * self.screensize[1] / 50)
         self.mask = pg.mask.from_surface(self.image)
 
-    def update(self, dantes):
+    def update(self, dantes, group2):
         if pg.sprite.collide_mask(self, dantes):
             if 100 < self.coord.y < 140:
                 dantes.hp -= 50
                 self.kill()
+        for el in group2:
+            if el != dantes:
+                if el.size >= self.size \
+                        and pg.sprite.collide_mask(self, el):
+                    self.kill()
+                    el.kill()
 
     def hide(self):
         self.size = 0
@@ -65,7 +69,7 @@ class Charge(pg.sprite.Sprite):
         else:
             return False
 
-          
+
 class D_charge(pg.sprite.Sprite):
 
     def __init__(self, m_c, e_c, screen, color, screensize, dantes):
@@ -85,11 +89,9 @@ class D_charge(pg.sprite.Sprite):
         self.ground = screensize[1]
         self.image = pg.image.load(os.path.join("Images", 'bullet.png')).convert()
         self.image = pg.transform.scale(self.image, (int(self.size), int(self.size)))
-        self.image.set_colorkey((0,0,0))
+        self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
         self.rect.center = (self.coord.x, self.coord.z)
-        #self.image = pg.Surface( (self.size_save, self.size_save), )
-        #self.rect = (int(self.coord.x) - self.image.get_rect()[0]/2, int(self.coord.z)-self.image.get_rect()[1]/2)
         self.mask = pg.mask.from_surface(self.image)
 
     def move(self, dt):
@@ -98,7 +100,7 @@ class D_charge(pg.sprite.Sprite):
         self.size = abs(1000 / self.coord.y)
         self.image = pg.image.load(os.path.join("Images", 'bullet.png')).convert()
         self.image = pg.transform.scale(self.image, (int(self.size), int(self.size)))
-        self.image.set_colorkey((0,0,0))
+        self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
         self.rect.center = (self.coord.x, self.coord.z)
         self.ground = int(self.screensize[1] / 1.85 + self.size * self.screensize[1] / 50)

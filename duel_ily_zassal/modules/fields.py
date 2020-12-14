@@ -32,6 +32,9 @@ class Field():
             elif self.dir == 'd':
                 self.E.z -= 10
 
+    def draw(self, screen, screensize):
+        pass
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
