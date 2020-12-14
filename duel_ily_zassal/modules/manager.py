@@ -81,8 +81,8 @@ class Manager():
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
-                        self.hp.level -= 10
-                        self.dantes.hp -= 10
+                        
+                self.hp.level = self.dantes.hp
 
             if self.pause_window.continue_button.activated:
                 for charge in self.charges:

@@ -22,7 +22,7 @@ class Dantes(pg.sprite.Sprite):
         self.mask = pg.mask.from_surface(self.image)
         
     def check_dantes_hp(self):
-        if self.hp < 50 and self.hp > 0:
+        if self.hp < 60 and self.hp > 0:
             self.image = pg.image.load(os.path.join("Images", 'dantes_damage1.png'))                   
         if self.hp <= 0:
             self.image = pg.image.load(os.path.join("Images", 'dantes_damage2.png'))     
