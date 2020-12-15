@@ -43,16 +43,22 @@ class Charge(pg.sprite.Sprite):
         self.mask = pg.mask.from_surface(self.image)
 
     def update(self, dantes, group2):
-        if pg.sprite.collide_mask(self, dantes):
-            if 100 < self.coord.y < 140:
-                dantes.hp -= 50
-                self.kill()
+        dead_dc = []
+        self_death = False
         for el in group2:
             if el != dantes:
                 if el.size >= self.size \
                         and pg.sprite.collide_mask(self, el):
+                    dead_dc.append(el)
+                    self_death = True
                     self.kill()
                     el.kill()
+            elif pg.sprite.collide_mask(self, dantes):
+                if 100 < self.coord.y < 140:
+                    dantes.hp -= 50
+                    self.kill()
+                    self_death = True
+        return (self_death, dead_dc)
 
     def hide(self):
         self.size = 0
