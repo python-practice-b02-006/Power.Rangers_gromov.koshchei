@@ -1,4 +1,4 @@
-from modules import gui, charges, fields, menu, background, pause, fighters, final
+from modules import gui, charges, fields, menu, background, pause, fighters, final, guide
 import pygame as pg
 
 RED = (255, 0, 0)
@@ -13,6 +13,7 @@ class Manager():
         self.done = False
         self.game = False
         self.pause = False
+        self.guide_crutch = False
         self.t_reload = 60
         self.attempts = 3
         self.group1 = pg.sprite.Group()
@@ -24,6 +25,7 @@ class Manager():
         self.quit_button = gui.Button('quit', (350, 275), self.screen, (100, 50), (375, 285))
         self.menu = menu.Menu(self.screen, self.screensize)
         self.back = background.Background(self.screen, self.screensize)
+        self.guide = guide.Guide(self.screen, self.screensize)
         self.dantes = fighters.Dantes(self.screen, self.screensize, 'dantes.png')
         self.group2.add(self.dantes)
         self.pushkin = fighters.Pushkin(screen, screensize)
@@ -41,6 +43,9 @@ class Manager():
             
         if not self.game:
             self.menu.set_menu(self.screen, self.screensize)
+
+        if self.guide_crutch:
+            self.guide.set_guide_window()
         
         if self.pause == False and self.game == True:
 
@@ -123,6 +128,12 @@ class Manager():
 
             if event.type == pg.QUIT:
                 done = True
+
+            if self.menu.guide_button.activated:
+                self.menu.guide_button.click(events, self.open_help)
+
+            if self.guide.back_button.activated:
+                self.guide.back_button.click(events, self.close_help)
 
             if self.loose.restart_button.activated and self.pushkin.hp <= 0:
                 self.loose.restart_button.click(events, self.restart)
@@ -221,6 +232,10 @@ class Manager():
         self.group2 = pg.sprite.Group()
         self.group2.add(self.dantes)
 
+    def open_help(self):
+        self.guide_crutch = True
 
+    def close_help(self):
+        self.guide_crutch = False
 if __name__ == "__main__":
     print("This module is not for direct call!")
