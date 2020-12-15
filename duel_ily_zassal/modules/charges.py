@@ -47,7 +47,7 @@ class Charge(pg.sprite.Sprite):
         self_death = False
         for el in group2:
             if el != dantes:
-                if el.size >= self.size and el.size <= self.size + 20\
+                if -5 < self.coord.y - el.coord.y < 5\
                         and pg.sprite.collide_mask(self, el):
                     dead_dc.append(el)
                     self_death = True
