@@ -56,12 +56,19 @@ class Manager():
             self.d_hp.level = self.dantes.hp
             self.p_hp.level = self.pushkin.hp
 
-            if self.dantes.hp > 0:
-                self.dantes.move()
 
             for charge in self.charges:
-                charge.move(0.01)
-                
+
+                if charge.coord.y < 140:
+                    if self.dantes.hp > 0:
+                        self.dantes.move()
+                    charge.move(0.01)
+                if charge.coord.y >= 140:
+                    charge.move(0.01)
+                    if self.dantes.hp > 0:
+                        self.dantes.move()
+
+
             if len(self.d_charges) == 0 and self.dantes.hp > 0:
                     self.d_charges.append(charges.D_charge(0, 1, self.screen, (255, 255, 255), self.screensize, self.dantes.coords))
                     self.group2.add(self.d_charges[-1])
