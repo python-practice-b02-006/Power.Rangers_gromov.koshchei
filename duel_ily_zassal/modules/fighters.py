@@ -20,12 +20,25 @@ class Dantes(pg.sprite.Sprite):
         self.coords = [int(self.image.get_rect()[0]+scr_size[0]/2), int(self.image.get_rect()[1]+4*scr_size[1]/7)]        
         self.rect = self.coords
         self.mask = pg.mask.from_surface(self.image)
+        self.step = 1
         
     def check_dantes_hp(self):
         if self.hp < 60 and self.hp > 0:
             self.image = pg.image.load(os.path.join("Images", 'dantes_damage1.png'))                   
         if self.hp <= 0:
-            self.image = pg.image.load(os.path.join("Images", 'dantes_damage2.png'))     
+            self.image = pg.image.load(os.path.join("Images", 'dantes_damage2.png'))
+            
+    def move(self):
+        if self.step == 1:
+            self.coords[0] -= 2
+        if self.coords[0] <= 500 and self.step == 1:
+            self.step = 2     
+        if self.step == 2:
+            self.coords[0] += 2
+        if self.coords[0] >= 700 and self.step == 2:
+            self.step = 1
+            
+        self.rect = self.coords         
 
 
 if __name__ == "__main__":
