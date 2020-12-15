@@ -5,7 +5,7 @@ from modules import final
 
 class Pushkin():
     def __init__(self, scr, screensize):
-        '''Pushking object class
+        '''Pushkin object class
         
         Parametrs:
         **scr** - game screen
@@ -17,6 +17,8 @@ class Pushkin():
         self.lose = final.Lose(self.scr, self.screensize)
 
     def mouse_gun(self):
+        '''Function visualizing Pushkin's gun.
+        '''
         gun_surf = pg.image.load(os.path.join("Images", "gun.png"))
         gun_rect = gun_surf.get_rect()
         pg.mouse.set_cursor(*pg.cursors.diamond)
@@ -27,6 +29,13 @@ class Pushkin():
 class Dantes(pg.sprite.Sprite):
 
     def __init__(self, scr, scr_size, filename):
+        '''Dantes object class
+        
+        Parametrs:
+        **scr** - game screen.
+        **scr_size** - game screen size.
+        **filename** - Dantes image file name.
+        '''
         pg.sprite.Sprite.__init__(self)
         self.filename = filename
         self.hp = 100
@@ -39,6 +48,10 @@ class Dantes(pg.sprite.Sprite):
 
         
     def check_dantes_hp(self, scr, screensize):
+        '''Function that checks Dantes health points and redraw his image based on it.
+        **scr** - game screen
+        **screensize** - game screen size.        
+        '''
 
         if self.hp <=100 and self.hp > 60:
             self.image = pg.image.load(os.path.join("Images", self.filename))
@@ -53,6 +66,8 @@ class Dantes(pg.sprite.Sprite):
             self.image = pg.image.load(os.path.join("Images", 'dantes_damage2.png'))
             
     def move(self):
+        '''Function that move Dantes.
+        '''
         if self.step == 1:
             self.coords[0] -= 2
         if self.coords[0] <= 500 and self.step == 1:
