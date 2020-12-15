@@ -93,7 +93,7 @@ class D_charge(pg.sprite.Sprite):
         self.force = vectors.Vector(0, 0, 0)
         self.screensize = screensize
         self.ground = screensize[1]
-        self.image = pg.image.load(os.path.join("Images", 'bullet.png')).convert()
+        self.image = pg.image.load(os.path.join("Images", 'd_bullet.png')).convert()
         self.image = pg.transform.scale(self.image, (int(self.size), int(self.size)))
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
@@ -104,7 +104,7 @@ class D_charge(pg.sprite.Sprite):
         self.coord += self.vel * dt
         self.vel += self.force * (1 / self.mass) * dt
         self.size = abs(1000 / self.coord.y)
-        self.image = pg.image.load(os.path.join("Images", 'bullet.png')).convert()
+        self.image = pg.image.load(os.path.join("Images", 'd_bullet.png')).convert()
         self.image = pg.transform.scale(self.image, (int(self.size), int(self.size)))
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
