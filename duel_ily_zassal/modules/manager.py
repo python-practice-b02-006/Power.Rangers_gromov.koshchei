@@ -12,7 +12,7 @@ class Manager():
         self.done = False
         self.game = False
         self.pause = False
-        self.t_reload = 12
+        self.t_reload = 60
         self.attempts = 3
         self.group1 = pg.sprite.Group()
         self.group2 = pg.sprite.Group()
@@ -58,7 +58,10 @@ class Manager():
                 self.field.calculate_force(self.charges)
                 self.d_hp.level = self.dantes.hp
                 self.p_hp.level = self.pushkin.hp
-                print(self.t_reload)
+
+                f = pg.font.SysFont('garamondполужирный', 26)
+                text = f.render("Bullets:" + str(self.attempts), 0, (255, 0, 0))
+                self.screen.blit(text, (30, 80))
 
                 if self.attempts == 0:
                     f = pg.font.SysFont('garamondполужирный', 26)
@@ -171,7 +174,7 @@ class Manager():
                         self.field.change = False
 
                 if self.attempts > 0:
-                    self.t_reload = 80
+                    self.t_reload = 60
                     if event.type == pg.MOUSEBUTTONDOWN:
                         if event.button == 1:
                             pos = pg.mouse.get_pos()
