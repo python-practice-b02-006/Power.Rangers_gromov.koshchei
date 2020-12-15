@@ -28,86 +28,76 @@ class Manager():
                                    self.pushkin.hp, screen, "Pushkin", GREEN)
         self.d_hp = gui.Progress_bar((int(screensize[0]/1.7), 40), (int(screensize[0]/2.5), 20),
                                    self.dantes.hp, screen, "Dantes", RED)
-
+        self.win = final.Win(self.screen, self.screensize)
+        self.loose = final.Lose(self.screen, self.screensize)
 
     def process(self, events):
 
         if self.pause:
             self.pause_window.set_pause(self.screen, self.screensize)
             
-        if self.game == False:
+        if not self.game:
             self.menu.set_menu(self.screen, self.screensize)
-
-        self.field.calculate_force(self.charges)
         
         if self.pause == False and self.game == True:
-            self.back.set_background()
-            self.d_hp.draw()
-            self.p_hp.draw()
-            self.group2.draw(self.screen)
-            self.group1.draw(self.screen)
-            #self.group1.update(self.dantes, self.group2)
-            self.group2.update(self.pushkin)
-            self.pushkin.mouse_gun()
-            self.pushkin.check_pushkin_hp()
-            self.dantes.check_dantes_hp(self.screen, self.screensize)
-            self.field.change_field()
-            self.field.calculate_force(self.charges)
-            self.d_hp.level = self.dantes.hp
-            self.p_hp.level = self.pushkin.hp
 
+            if self.dantes.hp > 0 and self.pushkin.hp > 0:
 
-            for charge in self.charges:
+                self.back.set_background()
+                self.d_hp.draw()
+                self.p_hp.draw()
+                self.group2.draw(self.screen)
+                self.group1.draw(self.screen)
+                self.group2.update(self.pushkin)
+                self.pushkin.mouse_gun()
+                self.pushkin.check_pushkin_hp()
+                self.dantes.check_dantes_hp(self.screen, self.screensize)
+                self.field.change_field()
+                self.field.calculate_force(self.charges)
+                self.d_hp.level = self.dantes.hp
+                self.p_hp.level = self.pushkin.hp
 
-                if charge.coord.y < 140:
-                    if self.dantes.hp > 0:
-                        self.dantes.move()
+                if self.dantes.hp > 0:
+                    self.dantes.move()
+
+                for charge in self.charges:
                     charge.move(0.01)
-                if charge.coord.y >= 140:
-                    charge.move(0.01)
-                    if self.dantes.hp > 0:
-                        self.dantes.move()
+                
+                if len(self.d_charges) == 0 and self.dantes.hp > 0:
 
-
-            if len(self.d_charges) == 0 and self.dantes.hp > 0:
                     self.d_charges.append(charges.D_charge(0, 1, self.screen, (255, 255, 255), self.screensize, self.dantes.coords))
                     self.group2.add(self.d_charges[-1])
 
-            for i, charge in enumerate(self.charges):
-                if charge.size < 5 and not self.pause:
-                    self.charges.remove(charge)
-                    self.group1.remove(charge)
-                if charge.coord.z > charge.ground:
-                    self.charges.remove(charge)
-                    self.group1.remove(charge)
-                if charge.disappear():
-                    self.charges.remove(charge)
-                    self.group1.remove(charge)
-                dead = charge.update(self.dantes, self.group2)
-                if dead[0]:
-                    for d in dead[1]:
-                        self.d_charges.remove(d)
-                        self.group2.remove(d)
-                    self.charges.remove(charge)
-                    self.group1.remove(charge)
+                for i, charge in enumerate(self.charges):
+                    if charge.size < 5 and not self.pause:
+                        self.charges.remove(charge)
+                        self.group1.remove(charge)
+                    if charge.coord.z > charge.ground:
+                        self.charges.remove(charge)
+                        self.group1.remove(charge)
+                    if charge.disappear():
+                        self.charges.remove(charge)
+                        self.group1.remove(charge)
+                    dead = charge.update(self.dantes, self.group2)
+                    if dead[0]:
+                        for d in dead[1]:
+                            self.d_charges.remove(d)
+                            self.group2.remove(d)
+                        self.charges.remove(charge)
+                        self.group1.remove(charge)
 
-
-            for d_charge in self.d_charges:
-                if d_charge.coord.y <= 5:
-                    self.d_charges.remove(d_charge)
-                    self.group2.remove(d_charge)
-                d_charge.move(0.01)
-            '''if len(self.charges) > 0:
                 for d_charge in self.d_charges:
-                    for charge in self.charges:
-                        if pg.sprite.collide_mask(charge, d_charge):
-                            if charge.size == d_charge.size:
-                                self.charges.remove(charge)
-                                self.group1.remove(charge)
-                                self.d_charges.remove(d_charge)
-                                self.group2.remove(d_charge)'''
+                    if d_charge.coord.y <= 5:
+                        self.d_charges.remove(d_charge)
+                        self.group2.remove(d_charge)
+                    d_charge.move(0.01)
 
-                
+            else:
+                if self.pushkin.hp <= 0:
+                    self.loose.duel_loser(self.screen, self.screensize)
+                else:
+                    self.win.duel_winner(self.screen, self.screensize)
+
         done = self.event_handler(events)
 
         return done
@@ -119,23 +109,22 @@ class Manager():
             if event.type == pg.QUIT:
                 done = True
 
-            if self.pushkin.lose.restart_button.activated:
-                self.pushkin.lose.restart_button.click(events, self.restart)
+            if self.loose.restart_button.activated and self.pushkin.hp <= 0:
+                self.loose.restart_button.click(events, self.restart)
 
-            if self.dantes.win.restart_button.activated:
-                self.dantes.win.restart_button.click(events, self.restart)
-
+            if self.win.restart_button.activated and self.dantes.hp <=0:
+                self.win.restart_button.click(events, self.restart)
 
             if self.menu.quit_button.activated:
                 self.menu.quit_button.click(events, self.quit_b)
                 done = self.done
 
-            if self.pushkin.lose.quit_button.activated:
-                self.pushkin.lose.quit_button.click(events, self.quit_b)
+            if self.loose.quit_button.activated and self.pushkin.hp <= 0:
+                self.loose.quit_button.click(events, self.quit_b)
                 done = self.done
 
-            if self.dantes.win.quit_button.activated:
-                self.dantes.win.quit_button.click(events, self.quit_b)
+            if self.win.quit_button.activated and self.dantes.hp <=0:
+                self.win.quit_button.click(events, self.quit_b)
                 done = self.done
 
             if self.pause_window.quit_button.activated:
@@ -172,8 +161,6 @@ class Manager():
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
-                        
-
 
             if self.pause_window.continue_button.activated:
                 for charge in self.charges:
@@ -191,7 +178,6 @@ class Manager():
     def play(self):
         self.game = True
 
-
     def pause_g(self):
         for charge in self.charges:
             charge.hide()
@@ -208,6 +194,7 @@ class Manager():
         self.game = False
         self.pushkin.hp = 60
         self.dantes.hp = 100
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
