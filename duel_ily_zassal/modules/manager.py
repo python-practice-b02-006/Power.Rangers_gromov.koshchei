@@ -127,7 +127,7 @@ class Manager():
             if self.win.restart_button.activated and self.dantes.hp <=0:
                 self.win.restart_button.click(events, self.restart)
 
-            if self.menu.quit_button.activated:
+            if self.menu.quit_button.activated and not self.game:
                 self.menu.quit_button.click(events, self.quit_b)
                 done = self.done
 
@@ -139,7 +139,7 @@ class Manager():
                 self.win.quit_button.click(events, self.quit_b)
                 done = self.done
 
-            if self.pause_window.quit_button.activated:
+            if self.pause_window.quit_button.activated and self.pause:
                 self.pause_window.quit_button.click(events, self.quit_b)
                 done = self.done
 
@@ -178,14 +178,12 @@ class Manager():
                             self.add_charge(pos)
                             self.attempts -= 1
 
-
-
-            if self.pause_window.continue_button.activated:
+            if self.pause_window.continue_button.activated and self.pause:
                 for charge in self.charges:
                     charge.became()
                 self.pause_window.continue_button.click(events, self.resume)
                 
-            if self.menu.play_button.activated:
+            if self.menu.play_button.activated and not self.game:
                 self.menu.play_button.click(events, self.play)
                    
         return done
