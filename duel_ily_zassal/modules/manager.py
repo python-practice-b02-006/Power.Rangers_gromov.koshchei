@@ -66,9 +66,9 @@ class Manager():
                 self.p_hp.level = self.pushkin.hp
                 self.field.draw(self.screen, self.screensize)
                 
-                f = pg.font.SysFont('garamondполужирный', 26)
-                text = f.render("Bullets:" + str(self.attempts), 0, (255, 0, 0))
-                self.screen.blit(text, (30, 80))
+                f = pg.font.SysFont('garamondполужирный', 36)
+                text = f.render(str(self.attempts) + '/3', 0, (255, 0, 0))
+                self.screen.blit(text, (577, 30))
 
                 if self.attempts == 0:
                     f = pg.font.SysFont('garamondполужирный', 26)
