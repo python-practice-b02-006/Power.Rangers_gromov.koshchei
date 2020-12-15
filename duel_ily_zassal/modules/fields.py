@@ -5,6 +5,12 @@ import pygame as pg
 class Field():
 
     def __init__(self, B, E):
+    '''Magnetic and electric fields class.
+    
+    Parametrs:
+    **B** - Magnetic component of the field
+    **E** - Electric component of the field
+    '''
         self.B = vectors.Vector(B[0], B[1], B[2])
         self.E = vectors.Vector(E[0], E[1], E[2])
         self.change = False
@@ -12,6 +18,11 @@ class Field():
         self.field_type = True
 
     def calculate_force(self, bullets):
+    '''A function that calculates the force from the field on the bullet.
+    
+    Parametrs:
+    **bullets** - list of bullets.
+    '''
         local = bullets
         for body in local:
             body.force = 0 * body.force
@@ -25,6 +36,8 @@ class Field():
         return local
 
     def change_field(self):
+    '''A function that changes the value of fields
+    '''
         if self.change:
             if self.field_type:
                 if self.dir == 'u':
@@ -46,6 +59,12 @@ class Field():
                     self.B.z += 1
 
     def draw(self, screen, screensize):
+    '''A function that displays field values
+    
+    Parametrs:
+    **screen** - game screen.
+    **screensize** - game screen size.
+    '''
         if self.field_type:
             f = pg.font.SysFont('garamondполужирный', 26)
             text1 = f.render("Ex = " + str(self.E.x), 0, (255, 0, 0))
