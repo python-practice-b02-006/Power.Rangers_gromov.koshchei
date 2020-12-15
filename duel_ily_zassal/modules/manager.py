@@ -64,6 +64,7 @@ class Manager():
                     charge.move(0.01)
                 
                 if len(self.d_charges) == 0 and self.dantes.hp > 0:
+
                     self.d_charges.append(charges.D_charge(0, 1, self.screen, (255, 255, 255), self.screensize, self.dantes.coords))
                     self.group2.add(self.d_charges[-1])
 
