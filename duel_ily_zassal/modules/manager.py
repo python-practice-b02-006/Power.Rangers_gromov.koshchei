@@ -35,6 +35,7 @@ class Manager():
                                    self.dantes.hp, screen, "Dantes", RED)
         self.win = final.Win(self.screen, self.screensize)
         self.loose = final.Lose(self.screen, self.screensize)
+        self.field.field_type = True
 
     def process(self, events):
 
@@ -63,7 +64,8 @@ class Manager():
                 self.field.calculate_force(self.charges)
                 self.d_hp.level = self.dantes.hp
                 self.p_hp.level = self.pushkin.hp
-
+                self.field.draw(self.screen, self.screensize)
+                
                 f = pg.font.SysFont('garamondполужирный', 26)
                 text = f.render("Bullets:" + str(self.attempts), 0, (255, 0, 0))
                 self.screen.blit(text, (30, 80))
@@ -93,6 +95,9 @@ class Manager():
                         self.charges.remove(charge)
                         self.group1.remove(charge)
                     if charge.coord.z > charge.ground:
+                        self.charges.remove(charge)
+                        self.group1.remove(charge)
+                    if charge.coord.y <= 5:
                         self.charges.remove(charge)
                         self.group1.remove(charge)
                     if charge.disappear():
@@ -157,7 +162,7 @@ class Manager():
                 self.pause_window.quit_button.click(events, self.quit_b)
                 done = self.done
 
-            if self.pause == False and self.game == True:
+            if not self.pause and self.game:
 
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
@@ -175,14 +180,24 @@ class Manager():
                         self.field.change = True
                         self.field.dir = 'd'
                 if event.type == pg.KEYUP:
+                    if event.key == pg.K_f:
+                        self.field.field_type = not self.field.field_type
                     if event.key == pg.K_RIGHT:
                         self.field.change = False
+                        self.field.E.x = 0
+                        self.field.B.y = 0
                     elif event.key == pg.K_LEFT:
                         self.field.change = False
+                        self.field.E.x = 0
+                        self.field.B.y = 0
                     elif event.key == pg.K_UP:
                         self.field.change = False
+                        self.field.E.z = 0
+                        self.field.B.z = 0
                     elif event.key == pg.K_DOWN:
                         self.field.change = False
+                        self.field.E.z = 0
+                        self.field.B.z = 0
 
                 if self.attempts > 0:
                     self.t_reload = 60
