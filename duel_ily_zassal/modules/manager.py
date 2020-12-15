@@ -203,7 +203,7 @@ class Manager():
                     self.t_reload = 60
                     if event.type == pg.MOUSEBUTTONDOWN:
                         if event.button == 1:
-                            pos = pg.mouse.get_pos()
+                            pos = (self.screensize[0] / 2, 425)
                             self.add_charge(pos)
                             self.attempts -= 1
 
@@ -246,11 +246,15 @@ class Manager():
         self.group1 = pg.sprite.Group()
         self.group2 = pg.sprite.Group()
         self.group2.add(self.dantes)
+        self.attempts = 3
+        self.field.field_type = True
 
     def open_help(self):
         self.guide_crutch = True
 
     def close_help(self):
         self.guide_crutch = False
+
+
 if __name__ == "__main__":
     print("This module is not for direct call!")

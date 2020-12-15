@@ -39,9 +39,9 @@ class Field():
                 if self.dir == 'u':
                     self.B.z -= 1
                 elif self.dir == 'l':
-                    self.B.x -= 1
+                    self.B.y -= 1
                 elif self.dir == 'r':
-                    self.B.x += 1
+                    self.B.y += 1
                 elif self.dir == 'd':
                     self.B.z += 1
 
@@ -52,8 +52,8 @@ class Field():
             text2 = f.render("Ez = " + str(self.E.z), 0, (255, 0, 0))
             screen.blit(text1, (screensize[0]-100, int(2 * screensize[1]/16)))
             screen.blit(text2, (screensize[0] - 100, int(3 * screensize[1] / 16)))
-            text3 = f.render("Bx = " + str(self.B.x), 0, (100, 100, 100))
-            text4 = f.render("By = " + str(self.B.z), 0, (100, 100, 100))
+            text3 = f.render("By = " + str(self.B.y), 0, (100, 100, 100))
+            text4 = f.render("Bz = " + str(self.B.z), 0, (100, 100, 100))
             screen.blit(text3, (40, int(2 * screensize[1] / 16)))
             screen.blit(text4, (40, int(3 * screensize[1] / 16)))
         else:
@@ -62,7 +62,7 @@ class Field():
             text2 = f.render("Ez = " + str(self.E.z), 0, (100, 100, 100))
             screen.blit(text1, (screensize[0]-100, int(2 * screensize[1]/16)))
             screen.blit(text2, (screensize[0] - 100, int(3 * screensize[1] / 16)))
-            text3 = f.render("By = " + str(self.B.x), 0, (255, 0, 0))
+            text3 = f.render("By = " + str(self.B.y), 0, (255, 0, 0))
             text4 = f.render("Bz = " + str(self.B.z), 0, (255, 0, 0))
             screen.blit(text3, (40, int(2 * screensize[1] / 16)))
             screen.blit(text4, (40, int(3 * screensize[1] / 16)))
