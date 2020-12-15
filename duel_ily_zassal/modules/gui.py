@@ -40,19 +40,24 @@ class Button():
 
 class Progress_bar():
 
-     def __init__(self, coord, size, level, screen):
+     def __init__(self, coord, size, level, screen, name, color):
          self.coord = coord
          self.size = size
          self.level = level
          self.lev_max = level
          self.screen = screen
-
+         self.name = name
+         self.color = color
      def draw(self):
          pg.draw.rect(self.screen, (255,255,255), (self.coord, self.size), 0)
+         f = pg.font.SysFont('arial', 26)
+         text = f.render(self.name, 0, (255, 255, 255))
+         self.screen.blit(text, (self.coord[0] + 5, self.coord[1] -30))
          if self.level <= 0:
              self.level = 0
-         pg.draw.rect(self.screen, (0, 0, 0),
+         pg.draw.rect(self.screen, self.color,
                       (self.coord, (int(self.size[0]*self.level/self.lev_max), self.size[1])), 0)
+
 
 
 class Dialog():

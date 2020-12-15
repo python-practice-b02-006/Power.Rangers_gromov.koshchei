@@ -106,6 +106,12 @@ class D_charge(pg.sprite.Sprite):
         self.ground = int(self.screensize[1] / 1.85 + self.size * self.screensize[1] / 50)
         self.mask = pg.mask.from_surface(self.image)
 
+    def update(self, pushkin):
+        if self.coord.y < 5:
+            pushkin.hp -= 30
+            self.coord.y = 5
+
+
     def interract(self, charges):
         pass
 
