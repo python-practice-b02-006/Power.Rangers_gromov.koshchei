@@ -2,6 +2,7 @@ import pygame as pg
 from modules import gui
 import os
 
+
 class Pause():
     def __init__(self, scr, screensize):
         self.continue_button = gui.Button("Continue", (int((screensize[0] - 100)/2), int((screensize[1] - 50)/3)),

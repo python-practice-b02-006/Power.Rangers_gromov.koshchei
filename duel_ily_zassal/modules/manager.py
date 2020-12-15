@@ -1,3 +1,6 @@
+'''
+The brain of project. Handle all events
+'''
 from modules import gui, charges, fields, menu, background, pause, fighters, final, guide
 import pygame as pg
 
@@ -8,6 +11,12 @@ GREEN = (158, 209, 48)
 class Manager():
 
     def __init__(self, screen, screensize):
+        '''
+
+        Args:
+            screen: screen to show objects
+            screensize: width and high of the screen
+        '''
         self.screen = screen
         self.screensize = screensize
         self.done = False
@@ -38,6 +47,14 @@ class Manager():
         self.field.field_type = True
 
     def process(self, events):
+        '''
+        Create objects handle their interactions
+        Args:
+            events: pg.events
+
+        Returns:
+            True if game was finished
+        '''
 
         if self.pause:
             self.pause_window.set_pause(self.screen, self.screensize)
@@ -128,16 +145,24 @@ class Manager():
         return done
 
     def event_handler(self, events):
+        '''
+        Control all events
+        Args:
+            events: pg.events
+
+        Returns:
+            True if game was finished
+        '''
         done = False
         for event in events:
 
             if event.type == pg.QUIT:
                 done = True
 
-            if self.menu.guide_button.activated:
+            if self.menu.guide_button.activated and not self.game:
                 self.menu.guide_button.click(events, self.open_help)
 
-            if self.guide.back_button.activated:
+            if self.guide.back_button.activated and not self.game:
                 self.guide.back_button.click(events, self.close_help)
 
             if self.loose.restart_button.activated and self.pushkin.hp <= 0:
@@ -218,24 +243,58 @@ class Manager():
         return done
 
     def quit_b(self):
+        '''
+        Click of quit button
+        Returns:
+            None
+        '''
         self.done = True
 
     def play(self):
+        '''
+        Star of game
+        Returns:
+            None
+        '''
         self.game = True
 
     def pause_g(self):
+        '''
+        Put game on pause
+        Returns:
+            None
+        '''
         for charge in self.charges:
             charge.hide()
         self.pause = True
 
     def resume(self):
+        '''
+        Resume game
+        Returns:
+            None
+        '''
         self.pause = False
 
     def add_charge(self, pos):
+        '''
+        Create a charge with needed properties
+        Args:
+            pos: position x and z of a charge
+
+        Returns:
+            None
+
+        '''
         self.charges.append(charges.Charge(0, 10, self.screen, (pos[0], 5, pos[1]), (255, 255, 255), self.screensize))
         self.group1.add(self.charges[-1])
 
     def restart(self):
+        '''
+        Restart the game. Put all variables on their initial values
+        Returns:
+            None
+        '''
         self.game = False
         self.pushkin.hp = 60
         self.dantes.hp = 100
@@ -250,9 +309,19 @@ class Manager():
         self.field.field_type = True
 
     def open_help(self):
+        '''
+        Open help on help button click
+        Returns:
+            None
+        '''
         self.guide_crutch = True
 
     def close_help(self):
+        '''
+        CLose help on back button click
+        Returns:
+            None
+        '''
         self.guide_crutch = False
 
 
