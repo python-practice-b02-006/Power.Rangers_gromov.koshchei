@@ -76,7 +76,7 @@ class D_charge(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.m_c = m_c
         self.e_c = e_c
-        self.vel = vectors.Vector(0, -70, 0)
+        self.vel = vectors.Vector(0, -140, 0)
         self.accel = vectors.Vector(0, 0, 0)
         self.mass = 10
         self.coord = vectors.Vector(dantes[0], 200, dantes[1])
