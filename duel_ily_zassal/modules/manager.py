@@ -1,9 +1,10 @@
 from modules import gui, charges, fields, menu, background, pause, fighters, final
 import pygame as pg
-import easygui
 
 RED = (255, 0, 0)
 GREEN = (158, 209, 48)
+
+
 class Manager():
 
     def __init__(self, screen, screensize):
@@ -50,7 +51,6 @@ class Manager():
                 self.group1.draw(self.screen)
                 self.group2.update(self.pushkin)
                 self.pushkin.mouse_gun()
-                self.pushkin.check_pushkin_hp()
                 self.dantes.check_dantes_hp(self.screen, self.screensize)
                 self.field.change_field()
                 self.field.calculate_force(self.charges)
@@ -194,6 +194,13 @@ class Manager():
         self.game = False
         self.pushkin.hp = 60
         self.dantes.hp = 100
+        self.charges = []
+        self.d_charges = []
+        self.group1 = []
+        self.group2 = []
+        self.group1 = pg.sprite.Group()
+        self.group2 = pg.sprite.Group()
+        self.group2.add(self.dantes)
 
 
 if __name__ == "__main__":
