@@ -12,6 +12,8 @@ class Manager():
         self.done = False
         self.game = False
         self.pause = False
+        self.t_reload = 12
+        self.attempts = 3
         self.group1 = pg.sprite.Group()
         self.group2 = pg.sprite.Group()
         self.pause_window = pause.Pause(self.screen, self.screensize)
@@ -56,6 +58,16 @@ class Manager():
                 self.field.calculate_force(self.charges)
                 self.d_hp.level = self.dantes.hp
                 self.p_hp.level = self.pushkin.hp
+                print(self.t_reload)
+
+                if self.attempts == 0:
+                    f = pg.font.SysFont('garamondполужирный', 26)
+                    text = f.render("Relouding...", 0, (255, 0, 0))
+                    self.screen.blit(text, (self.screensize[0]/2.2, self.screensize[1]/1.4))
+                    if self.t_reload > 0:
+                        self.t_reload -= 1
+                    if self.t_reload == 0:
+                        self.attempts = 3
 
                 if self.dantes.hp > 0:
                     self.dantes.move()
@@ -157,10 +169,16 @@ class Manager():
                         self.field.change = False
                     elif event.key == pg.K_DOWN:
                         self.field.change = False
-                if event.type == pg.MOUSEBUTTONDOWN:
-                    if event.button == 1:
-                        pos = pg.mouse.get_pos()
-                        self.add_charge(pos)
+
+                if self.attempts > 0:
+                    self.t_reload = 80
+                    if event.type == pg.MOUSEBUTTONDOWN:
+                        if event.button == 1:
+                            pos = pg.mouse.get_pos()
+                            self.add_charge(pos)
+                            self.attempts -= 1
+
+
 
             if self.pause_window.continue_button.activated:
                 for charge in self.charges:
