@@ -17,10 +17,6 @@ class Pushkin():
         gun_surf = pg.transform.scale(gun_surf, (2*gun_rect[2], 2*gun_rect[3]))
         self.scr.blit(gun_surf, (self.screensize[0]/2 - gun_rect[2], self.screensize[1] - 2*gun_rect[3]))
 
-    def check_pushkin_hp(self):
-        if self.hp <= 0:
-            self.lose.duel_loser(self.scr, self.screensize)
-
 
 class Dantes(pg.sprite.Sprite):
 
@@ -37,15 +33,17 @@ class Dantes(pg.sprite.Sprite):
 
         
     def check_dantes_hp(self, scr, screensize):
+
         if self.hp <=100 and self.hp > 60:
             self.image = pg.image.load(os.path.join("Images", self.filename))
+
         if self.hp <= 60 and self.hp > 0:
             self.image = pg.image.load(os.path.join("Images", 'dantes_damage1.png'))                   
+
         if self.hp <= 20 and self.hp > 0:
             self.image = pg.image.load(os.path.join("Images", 'dantes_damage2.png'))
 
         if self.hp <= 0:
-            self.win.duel_winner(scr, screensize)
             self.image = pg.image.load(os.path.join("Images", 'dantes_damage2.png'))
             
     def move(self):
@@ -58,7 +56,6 @@ class Dantes(pg.sprite.Sprite):
         if self.coords[0] >= 700 and self.step == 2:
             self.step = 1
             self.rect = self.coords         
-
 
 
 if __name__ == "__main__":
