@@ -5,6 +5,12 @@ from modules import final
 
 class Pushkin():
     def __init__(self, scr, screensize):
+        '''Pushking object class
+        
+        Parametrs:
+        **scr** - game screen
+        **screensize** - game screen
+        '''
         self.scr = scr
         self.screensize = screensize
         self.hp = 60
