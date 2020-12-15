@@ -48,7 +48,7 @@ class Manager():
             self.p_hp.draw()
             self.group2.draw(self.screen)
             self.group1.draw(self.screen)
-            #self.group1.update(self.dantes, self.group2)
+            # self.group1.update(self.dantes, self.group2)
             self.group2.update(self.pushkin)
             self.pushkin.mouse_gun()
             self.pushkin.check_pushkin_hp()
@@ -89,23 +89,12 @@ class Manager():
                     self.charges.remove(charge)
                     self.group1.remove(charge)
 
-
             for d_charge in self.d_charges:
                 if d_charge.coord.y <= 5:
                     self.d_charges.remove(d_charge)
                     self.group2.remove(d_charge)
                 d_charge.move(0.01)
-            '''if len(self.charges) > 0:
-                for d_charge in self.d_charges:
-                    for charge in self.charges:
-                        if pg.sprite.collide_mask(charge, d_charge):
-                            if charge.size == d_charge.size:
-                                self.charges.remove(charge)
-                                self.group1.remove(charge)
-                                self.d_charges.remove(d_charge)
-                                self.group2.remove(d_charge)'''
 
-                
         done = self.event_handler(events)
 
         return done
@@ -122,7 +111,6 @@ class Manager():
 
             if self.dantes.win.restart_button.activated:
                 self.dantes.win.restart_button.click(events, self.restart)
-
 
             if self.menu.quit_button.activated:
                 self.menu.quit_button.click(events, self.quit_b)
@@ -170,8 +158,6 @@ class Manager():
                     if event.button == 1:
                         pos = pg.mouse.get_pos()
                         self.add_charge(pos)
-                        
-
 
             if self.pause_window.continue_button.activated:
                 for charge in self.charges:
@@ -189,7 +175,6 @@ class Manager():
     def play(self):
         self.game = True
 
-
     def pause_g(self):
         for charge in self.charges:
             charge.hide()
@@ -206,6 +191,7 @@ class Manager():
         self.game = False
         self.pushkin.hp = 60
         self.dantes.hp = 100
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

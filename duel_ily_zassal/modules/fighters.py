@@ -2,6 +2,7 @@ import pygame as pg
 import os
 from modules import final
 
+
 class Pushkin():
     def __init__(self, scr, screensize):
         self.scr = scr
@@ -15,11 +16,10 @@ class Pushkin():
         pg.mouse.set_cursor(*pg.cursors.diamond)
         gun_surf = pg.transform.scale(gun_surf, (2*gun_rect[2], 2*gun_rect[3]))
         self.scr.blit(gun_surf, (self.screensize[0]/2 - gun_rect[2], self.screensize[1] - 2*gun_rect[3]))
+
     def check_pushkin_hp(self):
         if self.hp <= 0:
             self.lose.duel_loser(self.scr, self.screensize)
-
-
 
 
 class Dantes(pg.sprite.Sprite):
