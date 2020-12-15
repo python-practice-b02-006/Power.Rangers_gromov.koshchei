@@ -23,7 +23,6 @@ class Manager():
         self.back = background.Background(self.screen, self.screensize)
         self.dantes = fighters.Dantes(self.screen, self.screensize, 'dantes.png')
         self.group2.add(self.dantes)
-        self.d_b_count = 6
         self.pushkin = fighters.Pushkin(screen, screensize)
         self.p_hp = gui.Progress_bar((int(screensize[0]/70), 40), (int(screensize[0]/2.5), 20),
                                    self.pushkin.hp, screen, "Pushkin", GREEN)
@@ -64,10 +63,8 @@ class Manager():
                 charge.move(0.01)
                 
             if len(self.d_charges) == 0 and self.dantes.hp > 0:
-                    if self.d_b_count > 0:
-                        self.d_charges.append(charges.D_charge(0, 1, self.screen, (255, 255, 255), self.screensize, self.dantes.coords))
-                        self.group2.add(self.d_charges[-1])
-                        self.d_b_count -= 1
+                    self.d_charges.append(charges.D_charge(0, 1, self.screen, (255, 255, 255), self.screensize, self.dantes.coords))
+                    self.group2.add(self.d_charges[-1])
 
             for i, charge in enumerate(self.charges):
                 if charge.size < 5 and not self.pause:
